@@ -1,0 +1,837 @@
+/*
+ * Northfield Outfitters — independent merchant Shopify storefront (demo).
+ * Deliberately DISTINCT palette/typography from the Rakuten-branded demo
+ * surfaces (pillar-3-exclusive-access, pillar-3-website): deep forest green
+ * + warm stone/tan, serif brand lockup, no purple/lavender anywhere.
+ */
+
+:root {
+  --forest: #2F5233;
+  --forest-dark: #1C3320;
+  --forest-mid: #3F6B47;
+  --tan: #E8DFC8;
+  --tan-2: #DDCE9F;
+  --cream: #FBF8F0;
+  --text: #20261D;
+  --text-muted: #6B6B5C;
+  --border: #D8CDA9;
+  --success: #3F7D45;
+  --accent-gold: #B8863B;
+  --white: #FFFFFF;
+  --font-serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "SF Mono", Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--cream);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  min-width: 960px;
+}
+
+/* ---------- Demo-hub strip (top corner, persistent) ---------- */
+
+.demo-hub-strip {
+  background: var(--forest-dark);
+  padding: 6px 24px;
+  font-size: 12px;
+}
+
+.demo-hub-link {
+  color: var(--tan);
+  text-decoration: none;
+  font-family: var(--font-sans);
+  opacity: 0.9;
+}
+
+.demo-hub-link:hover { opacity: 1; text-decoration: underline; }
+
+/* ---------- Merchant nav ---------- */
+
+.merchant-nav {
+  background: var(--forest);
+  padding: 16px 0;
+}
+
+.nav-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.brand-mark {
+  display: flex;
+  color: var(--tan);
+}
+
+.brand-mark svg { width: 26px; height: 26px; }
+
+.brand-name {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  letter-spacing: 0.03em;
+  color: var(--white);
+  font-weight: 700;
+}
+
+.nav-links {
+  display: flex;
+  gap: 22px;
+}
+
+.nav-links a {
+  color: var(--tan);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.nav-links a:hover { color: var(--white); }
+
+.nav-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.nav-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 240px;
+  border-radius: 999px;
+  padding: 8px 14px;
+  background: var(--cream);
+  color: var(--text-muted);
+}
+
+.nav-search svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+.nav-search input {
+  width: 100%;
+  border: none;
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+  background: transparent;
+  color: var(--text);
+}
+
+.nav-search input::placeholder { color: var(--text-muted); }
+
+.nav-cart {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--tan);
+  cursor: default;
+  padding: 4px;
+}
+
+.nav-cart svg { width: 22px; height: 22px; }
+
+.cart-count {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: var(--accent-gold);
+  color: var(--forest-dark);
+  border-radius: 999px;
+  min-width: 17px;
+  height: 17px;
+  font-size: 10px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+}
+
+/* ---------- Scenario selector row ---------- */
+
+.scenario-row {
+  background: var(--cream);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 24px;
+  max-width: 1080px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 12px;
+}
+
+.scenario-label {
+  font-weight: 700;
+  color: var(--forest-dark);
+}
+
+.scenario-btn {
+  border: 1px solid var(--forest);
+  background: var(--white);
+  color: var(--forest-dark);
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.scenario-btn.active {
+  background: var(--forest);
+  color: var(--white);
+}
+
+.countdown-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.countdown-box {
+  background: var(--tan);
+  border-radius: 10px;
+  padding: 10px 14px;
+  text-align: center;
+  min-width: 130px;
+}
+
+.countdown-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 3px;
+}
+
+.countdown-value {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--forest-dark);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Main view area ---------- */
+
+.view-root {
+  flex: 1;
+  max-width: 1080px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px 24px 64px;
+}
+
+/* Home / hero — full-width banner block, Shopify "Dawn"-style */
+
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 380px;
+  background: linear-gradient(135deg, var(--forest) 0%, var(--forest-dark) 100%);
+  border-radius: 14px;
+  padding: 56px 48px;
+  margin: -40px -24px 40px;
+  overflow: hidden;
+}
+
+.hero-art {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 220px;
+  opacity: 0.14;
+  pointer-events: none;
+}
+
+.hero-inner {
+  position: relative;
+  max-width: 560px;
+}
+
+.hero h1 {
+  font-family: var(--font-serif);
+  font-size: 36px;
+  line-height: 1.25;
+  margin: 0 0 14px;
+  color: var(--white);
+}
+
+.hero p {
+  font-size: 15px;
+  color: var(--tan);
+  margin: 0 auto 26px;
+  max-width: 460px;
+}
+
+.pill-btn-solid {
+  display: inline-block;
+  background: var(--forest);
+  color: var(--white);
+  border: none;
+  border-radius: 999px;
+  padding: 12px 26px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.pill-btn-solid:hover { background: var(--forest-dark); }
+
+.pill-btn-outline {
+  display: inline-block;
+  background: transparent;
+  color: var(--forest-dark);
+  border: 2px solid var(--forest);
+  border-radius: 999px;
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.pill-btn-outline:hover { background: var(--forest); color: var(--white); }
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.feature-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px;
+  text-align: center;
+}
+
+.feature-card .feature-icon { font-size: 28px; margin-bottom: 10px; }
+
+.feature-card h3 {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  margin: 0 0 6px;
+  color: var(--forest-dark);
+}
+
+.feature-card p {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ---------- Collection grid (real Shopify-style product grid) ---------- */
+
+.collection-title {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  color: var(--forest-dark);
+  margin: 0 0 18px;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.product-card {
+  display: block;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--text);
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+  font-family: inherit;
+}
+
+.product-card:hover { border-color: var(--forest); }
+
+.product-card-tile {
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 56px;
+  background: linear-gradient(135deg, var(--forest) 0%, var(--forest-dark) 100%);
+}
+
+.product-card-body {
+  padding: 12px 14px 16px;
+}
+
+.product-card-name {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 4px;
+}
+
+.product-card-price {
+  font-size: 13px;
+  color: var(--forest-dark);
+  font-weight: 700;
+}
+
+/* Demo-only entry-point section — NOT a real storefront section. Flagged
+   distinctly (dashed border, eyebrow label) so it never reads as "how real
+   shoppers discover these products" — per spec US-3, these are hidden from
+   normal browsing/search and only reachable via a Rakuten-issued link. This
+   grid exists purely so the demo can be clicked through quickly. */
+.demo-controls {
+  border: 1.5px dashed var(--accent-gold);
+  border-radius: 12px;
+  padding: 22px 24px;
+  background: #FBF4E3;
+  margin-top: 40px;
+}
+
+.demo-controls-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent-gold);
+  font-weight: 700;
+  margin: 0 0 4px;
+}
+
+.demo-controls-sublabel {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin: 0 0 16px;
+}
+
+.demo-controls .product-card {
+  border-color: var(--border);
+}
+
+/* About placeholder */
+
+.about-placeholder {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 40px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.about-placeholder h2 {
+  font-family: var(--font-serif);
+  color: var(--forest-dark);
+  margin: 0 0 8px;
+}
+
+/* Search-empty (negative case) */
+
+.empty-state {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 56px 32px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.empty-state .icon { font-size: 36px; margin-bottom: 14px; }
+
+.empty-state h2 {
+  font-family: var(--font-serif);
+  color: var(--text);
+  font-size: 18px;
+  margin: 0 0 10px;
+}
+
+.empty-state p {
+  font-size: 13px;
+  max-width: 420px;
+  margin: 0 auto 20px;
+}
+
+.text-link {
+  background: none;
+  border: none;
+  color: var(--forest);
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: inherit;
+  text-decoration: underline;
+}
+
+/* Gated product view — restructured as a real Shopify PDP: image gallery
+   (main image + thumbnail row) on the left, buy box on the right. */
+
+.product-view {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 40px;
+}
+
+.product-gallery { display: flex; flex-direction: column; gap: 12px; }
+
+.product-media {
+  height: 340px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--forest) 0%, var(--forest-dark) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 100px;
+}
+
+.product-thumb-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+/* Decorative only — real Shopify PDPs show a thumbnail gallery; these do not
+   swap the main image, they just make a single-photo placeholder look less
+   obviously fake. */
+.product-thumb {
+  height: 62px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--forest-mid) 0%, var(--forest) 100%);
+  opacity: 0.55;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+}
+
+.product-thumb:first-child { opacity: 1; box-shadow: 0 0 0 2px var(--forest); }
+
+.product-info { padding-top: 4px; }
+
+.product-blurb {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin: 0 0 18px;
+  max-width: 440px;
+}
+
+.qty-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.qty-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--forest-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Decorative stepper — visual affordance only, defaults to 1, no working
+   +/- logic beyond that per the brief. */
+.qty-stepper {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.qty-stepper button {
+  border: none;
+  background: var(--cream);
+  color: var(--forest-dark);
+  width: 32px;
+  height: 32px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.qty-stepper span {
+  width: 38px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* Deliberately distinct from how Northfield tags its own native products:
+   dashed gold border + external-link glyph, signaling "this came from a
+   partner program, not our normal merchandising." */
+.exclusive-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1.5px dashed var(--accent-gold);
+  color: var(--accent-gold);
+  background: #FBF4E3;
+  font-weight: 700;
+  font-size: 12px;
+  border-radius: 999px;
+  padding: 6px 14px;
+  margin-bottom: 14px;
+}
+
+.product-title {
+  font-family: var(--font-serif);
+  font-size: 26px;
+  margin: 4px 0 8px;
+  color: var(--text);
+}
+
+.product-price {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--forest-dark);
+  margin-bottom: 16px;
+}
+
+.integration-note {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  background: var(--tan);
+  border-left: 3px solid var(--forest);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin: 0 0 22px;
+  max-width: 480px;
+}
+
+/* Checkout */
+
+.checkout-view h1 {
+  font-family: var(--font-serif);
+  color: var(--forest-dark);
+  font-size: 24px;
+  margin: 0 0 20px;
+}
+
+.checkout-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 20px;
+  background: var(--white);
+  margin-bottom: 16px;
+  max-width: 460px;
+}
+
+.checkout-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  padding: 7px 0;
+}
+
+.checkout-row .was-price {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.checkout-row.total {
+  font-weight: 800;
+  font-size: 16px;
+  border-top: 1px solid var(--border);
+  margin-top: 6px;
+  padding-top: 12px;
+}
+
+.discount-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #EAF3EA;
+  border: 1px solid #C6DEC7;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 12.5px;
+  color: var(--success);
+  font-weight: 700;
+  margin: 6px 0 8px;
+}
+
+.discount-code-chip {
+  font-family: var(--font-mono);
+  background: var(--forest-dark);
+  color: #E9D9A8;
+  border-radius: 5px;
+  padding: 2px 7px;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+}
+
+/* Confirmation */
+
+.confirmation-view { max-width: 520px; }
+
+.confirm-check {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #EAF3EA;
+  color: var(--success);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin-bottom: 16px;
+}
+
+.confirmation-view h1 {
+  font-family: var(--font-serif);
+  color: var(--forest-dark);
+  font-size: 24px;
+  margin: 0 0 6px;
+}
+
+.confirm-sub {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0 0 20px;
+}
+
+.return-note {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  margin-top: 10px;
+  max-width: 420px;
+}
+
+/* ---------- Attribution note (order confirmation only) ---------- */
+
+.attribution-note {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  background: var(--tan);
+  border-left: 3px solid var(--forest);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin: 0 0 20px;
+  max-width: 460px;
+}
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 36px 24px 18px;
+}
+
+.footer-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.4fr;
+  gap: 32px;
+  margin-bottom: 24px;
+}
+
+.footer-col h4 {
+  font-family: var(--font-serif);
+  font-size: 14px;
+  color: var(--forest-dark);
+  margin: 0 0 12px;
+}
+
+.footer-col a {
+  display: block;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.footer-col a:hover { color: var(--forest-dark); }
+
+.footer-newsletter p {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  margin: 0 0 12px;
+  max-width: 260px;
+}
+
+.newsletter-form {
+  display: flex;
+  gap: 8px;
+}
+
+.newsletter-form input {
+  flex: 1;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 12.5px;
+  font-family: inherit;
+  outline: none;
+  background: var(--white);
+  color: var(--text);
+}
+
+.newsletter-form button {
+  border: none;
+  background: var(--forest);
+  color: var(--white);
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.newsletter-form button:hover { background: var(--forest-dark); }
+
+.footer-legal {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 16px 24px 0;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+.footer-legal p {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin: 0;
+}

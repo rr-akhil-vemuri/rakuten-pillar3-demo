@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pillar 3 Demo — Exclusive Member Product Access</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="rig">
+
+  <div class="rig-header">
+    <a href="../index.html" style="display:inline-block; font-size:12px; color:var(--purple); text-decoration:none; margin-bottom:8px;">◀ Demo Hub</a>
+    <h1>Pillar 3 — Exclusive Member Product Access</h1>
+    <p>Click-through demo prototype. Synthetic data only. Not connected to any real backend.</p>
+    <div class="variant-toggle" id="scenarioToggle">
+      <span>Demo scenario (PRD v2 §7.2):</span>
+      <!-- Buttons injected by app.js from shared PILLAR3.SCENARIOS -->
+    </div>
+    <div class="variant-toggle">
+      <span>Checkout mechanism:</span>
+      <button id="variantABtn" class="variant-btn active" data-variant="A">Variant A — Invoice link</button>
+      <button id="variantBBtn" class="variant-btn" data-variant="B">Variant B — Discount code</button>
+    </div>
+  </div>
+
+  <div class="phone">
+    <div class="phone-notch"></div>
+    <div class="statusbar">
+      <span>11:04</span>
+      <span class="statusbar-icons">•••• 5G 🔋</span>
+    </div>
+
+    <div class="screen-viewport" id="screenViewport">
+      <!-- Screens injected by app.js -->
+    </div>
+
+    <nav class="bottom-nav" id="bottomNav">
+      <button class="nav-item" data-screen="home">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5a1 1 0 0 0 1 1H9a1 1 0 0 0 1-1V15a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4.5a1 1 0 0 0 1 1h2.5a1 1 0 0 0 1-1V10"/></svg>
+        </span><span>Home</span>
+      </button>
+      <button class="nav-item" data-screen="explore">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>
+        </span><span>Explore</span>
+      </button>
+      <button class="nav-item" data-screen="rewards">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9" width="18" height="11" rx="1.5"/><path d="M3 9h18v3.5H3z" fill="currentColor" stroke="none" opacity="0.15"/><path d="M12 9v11M3 9V7a1.5 1.5 0 0 1 1.5-1.5H9A3 3 0 0 1 12 8a3 3 0 0 1 3-2.5h4.5A1.5 1.5 0 0 1 21 7v2"/><path d="M12 8a2.5 2.5 0 0 0-2.5-2.5A2 2 0 0 0 7.5 7.5C7.5 9 9 9 12 9Zm0 0a2.5 2.5 0 0 1 2.5-2.5A2 2 0 0 1 16.5 7.5c0 1.5-1.5 1.5-4.5 1.5Z"/></svg>
+        </span><span>Rewards</span>
+      </button>
+      <button class="nav-item" data-screen="instore">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        </span><span>In-Store</span>
+      </button>
+      <button class="nav-item" data-screen="account">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-3.5 3.5-6 8-6s8 2.5 8 6"/></svg>
+        </span><span>Account</span>
+      </button>
+    </nav>
+  </div>
+
+  <div class="rig-footer">
+    <p><strong>Walkthrough path:</strong> Home → tap "Members-Only Access" card → Offer Detail → Unlock → Redirect → Checkout → Confirmation</p>
+    <p><strong>Also try:</strong> Explore tab → search "Aurora Trail Jacket" to see the negative/non-gated case (US-3).</p>
+    <button id="resetBtn" class="reset-btn">Reset demo</button>
+  </div>
+
+</div>
+
+<script src="../shared/lifecycle-data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
