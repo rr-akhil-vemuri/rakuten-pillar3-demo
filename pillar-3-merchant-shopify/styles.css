@@ -311,21 +311,6 @@ body {
 
 .pill-btn-solid:hover { background: var(--forest-dark); }
 
-.pill-btn-outline {
-  display: inline-block;
-  background: transparent;
-  color: var(--forest-dark);
-  border: 2px solid var(--forest);
-  border-radius: 999px;
-  padding: 10px 24px;
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-  font-family: inherit;
-}
-
-.pill-btn-outline:hover { background: var(--forest); color: var(--white); }
-
 .feature-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -357,13 +342,6 @@ body {
 }
 
 /* ---------- Collection grid (real Shopify-style product grid) ---------- */
-
-.collection-title {
-  font-family: var(--font-serif);
-  font-size: 20px;
-  color: var(--forest-dark);
-  margin: 0 0 18px;
-}
 
 .product-grid {
   display: grid;
@@ -624,17 +602,6 @@ body {
   font-weight: 800;
   color: var(--forest-dark);
   margin-bottom: 16px;
-}
-
-.integration-note {
-  font-size: 12.5px;
-  color: var(--text-muted);
-  background: var(--tan);
-  border-left: 3px solid var(--forest);
-  border-radius: 8px;
-  padding: 10px 14px;
-  margin: 0 0 22px;
-  max-width: 480px;
 }
 
 /* Checkout */

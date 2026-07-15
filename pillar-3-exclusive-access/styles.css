@@ -583,15 +583,6 @@ body {
   margin-bottom: 14px;
 }
 
-.invoice-banner {
-  background: var(--lavender);
-  border-radius: 10px;
-  padding: 10px 12px;
-  font-size: 11px;
-  color: var(--purple-dark);
-  margin-bottom: 14px;
-  font-weight: 600;
-}
 
 /* --- Variant A: in-app browser chrome + Shopify-hosted checkout page ---
    The draft-order invoice link opens a real Shopify checkout domain, so this

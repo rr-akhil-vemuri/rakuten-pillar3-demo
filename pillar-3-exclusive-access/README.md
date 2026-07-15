@@ -17,7 +17,7 @@ open index.html
 1. **Home** → tap the "Members-Only Access" hero card (US-1)
 2. **Offer detail** → "Unlock This Item" (US-1, eligibility flagged as a demo simplification)
 3. **Redirect** transition, shows the tracked-click trace (US-2)
-4. **Checkout** — toggle Variant A/B at the top of the page before clicking through to compare mechanisms (US-4)
+4. **Checkout** — toggle Variant A/B at the top of the page before clicking through to compare mechanisms (US-4). Variant A is styled as a real Shopify-hosted draft-order invoice: an in-app-browser chrome (URL bar showing the merchant's `.myshopify.com` domain) wraps a non-Rakuten-branded checkout page (merchant wordmark, muted prefilled contact/shipping fields, card-brand icons, a dark "Pay now" button, "Powered by Shopify" footer) — signaling the member has actually left the Rakuten app. Variant B stays the original in-app-styled checkout.
 5. **Confirmation** with a visible attribution-proof panel (US-5)
 
 ## Negative case (US-3)
