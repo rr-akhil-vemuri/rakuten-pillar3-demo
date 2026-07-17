@@ -32,7 +32,7 @@ The PDP's prospect-unlock (Scenario 4) buy box also dropped its A1/A2 presenter 
 
 Earlier versions of this demo used a fictional merchant, "Northfield Outfitters," and a fictional 4-SKU catalog browsable from a card grid on Home. Both are gone. The storefront is presented purely as Gymshark, with zero fictional-merchant framing anywhere, and there is exactly one product used across the whole demo: Gymshark's real **Shadow Seamless T Shirt** ($44.00, navy/heather-blue). It's the same SKU shown in the real screenshots, so the product name and price in the Rakuten overlay always match what's baked into the photo pixels below it.
 
-Product data comes from the shared catalog at `../shared/products.js` (`PILLAR3.PRODUCTS`), which now has a single entry: id `shadow-seamless-tshirt`, price $44.00, image `../../images/products/shadow-seamless-tshirt.jpg`. `PILLAR3.DEFAULT_PRODUCT_ID` is `"shadow-seamless-tshirt"`.
+Product data comes from the shared catalog at `../shared/products.js` (`PILLAR3.PRODUCTS`), which now has a single entry: id `shadow-seamless-tshirt`, price $44.00, image `../images/products/shadow-seamless-tshirt.jpg`. `PILLAR3.DEFAULT_PRODUCT_ID` is `"shadow-seamless-tshirt"`.
 
 ## Rakuten overlay branding
 

@@ -106,11 +106,11 @@ function renderHome() {
   const lockIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>`;
   return `
     <div class="shot-frame">
-      <img src="../../images/gymshark/shopify%20home%20page.png" alt="Gymshark storefront homepage">
+      <img src="../images/gymshark/shopify%20home%20page.png" alt="Gymshark storefront homepage">
       <button type="button" class="product-hotspot" id="homeProductHotspot"
         style="left:26.04%; top:23.04%; width:23.85%; height:76.96%;"
         aria-label="Shadow Seamless T Shirt — via Rakuten"></button>
-      <div class="home-tile-logo-badge"><img src="../../design/assets/r_logo.png" alt="Rakuten"></div>
+      <div class="home-tile-logo-badge"><img src="../design/assets/r_logo.png" alt="Rakuten"></div>
       <div class="home-price-cover"></div>
       <div class="home-tile-overlay"><div class="home-tile-locked">${lockIcon}<span>Rakuten Exclusive</span></div></div>
     </div>
@@ -136,7 +136,7 @@ function renderGatedProduct() {
 
   return `
     <div class="shot-frame pdp-shot-frame">
-      <img src="../../images/gymshark/shopify%20product%20page.png" alt="Real product page — Shadow Seamless T Shirt">
+      <img src="../images/gymshark/shopify%20product%20page.png" alt="Real product page — Shadow Seamless T Shirt">
       <div class="pdp-price-cover"></div>
       <div class="pdp-overlay-badge">
         <div class="exclusive-tag${isUrgentScenario ? " urgent" : ""}">${s.badgeText} — via Rakuten</div>
@@ -254,7 +254,7 @@ function renderCheckout() {
   const s = PILLAR3.getScenario(state.scenario);
   return `
     <div class="shot-frame checkout-shot-frame">
-      <img src="../../images/gymshark/shopify%20checkout%20page.png" alt="Checkout — order summary">
+      <img src="../images/gymshark/shopify%20checkout%20page.png" alt="Checkout — order summary">
       <div class="checkout-overlay-card">
         <div class="cashback-banner">
           <span>Cashback on this order</span>
@@ -293,9 +293,9 @@ function renderConfirmation() {
   const s = PILLAR3.getScenario(state.scenario);
   return `
     <div class="shot-frame confirm-shot-frame">
-      <img src="../../images/gymshark/shopify%20bought%20page.png" alt="Order confirmed — Shadow Seamless T Shirt">
+      <img src="../images/gymshark/shopify%20bought%20page.png" alt="Order confirmed — Shadow Seamless T Shirt">
       <div class="confirm-thumb-cover"></div>
-      <img class="confirm-thumb-img" src="../../images/products/shadow-seamless-tshirt.jpg" alt="Shadow Seamless T Shirt">
+      <img class="confirm-thumb-img" src="../images/products/shadow-seamless-tshirt.jpg" alt="Shadow Seamless T Shirt">
       <div class="confirm-payment-cover"></div>
       <div class="confirm-payment-value">${product.price}</div>
       <div class="confirm-overlay">

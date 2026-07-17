@@ -14,7 +14,7 @@
 const PRODUCT = {
   name: "Shadow Seamless T Shirt",
   price: "$44.00",
-  image: "../../images/products/shadow-seamless-tshirt.jpg",
+  image: "../images/products/shadow-seamless-tshirt.jpg",
 };
 
 const state = {
@@ -108,7 +108,7 @@ function renderHome() {
   return `
     <div class="screen shot-screen">
       <div class="shot-wrap">
-        <img src="../../design/assets/rakuten-app-home.png" alt="Rakuten app — Home tab" class="shot-img" />
+        <img src="../design/assets/rakuten-app-home.png" alt="Rakuten app — Home tab" class="shot-img" />
         ${navHotspots(NAV_TOP_PCT_STANDARD, NAV_HEIGHT_PCT_STANDARD)}
       </div>
     </div>
@@ -121,7 +121,7 @@ function renderExplore() {
   return `
     <div class="screen shot-screen">
       <div class="shot-wrap">
-        <img src="../../design/assets/rakuten-app-explore.png" alt="Rakuten app — Explore tab" class="shot-img" />
+        <img src="../design/assets/rakuten-app-explore.png" alt="Rakuten app — Explore tab" class="shot-img" />
         ${navHotspots(NAV_TOP_PCT_STANDARD, NAV_HEIGHT_PCT_STANDARD)}
       </div>
     </div>
@@ -180,7 +180,7 @@ function renderRewards() {
   return `
     <div class="screen shot-screen">
       <div class="shot-wrap">
-        <img src="../../design/assets/rakuten-app-rewards-composited.png" alt="Rakuten app — Rewards tab, with Gymshark member-exclusive card" class="shot-img" />
+        <img src="../design/assets/rakuten-app-rewards-composited.png" alt="Rakuten app — Rewards tab, with Gymshark member-exclusive card" class="shot-img" />
         <div class="rewards-card-overlay">
           <p class="rc-title">${copy.title}</p>
           <p class="rc-desc">${copy.desc}</p>

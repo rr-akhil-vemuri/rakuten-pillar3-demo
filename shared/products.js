@@ -24,7 +24,7 @@ PILLAR3.PRODUCTS = [
     id: "shadow-seamless-tshirt",
     name: "Shadow Seamless T Shirt",
     price: "$44.00",
-    image: "../../images/products/shadow-seamless-tshirt.jpg",
+    image: "../images/products/shadow-seamless-tshirt.jpg",
     blurb: "Seamless-knit performance tee built for lifting, muscle fit.",
   },
 ];
