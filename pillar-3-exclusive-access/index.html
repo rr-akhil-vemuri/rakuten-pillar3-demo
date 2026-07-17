@@ -11,23 +11,23 @@
 <div class="rig">
 
   <div class="rig-header">
-    <a href="../index.html" style="display:inline-block; font-size:12px; color:var(--purple); text-decoration:none; margin-bottom:8px;">◀ Demo Hub</a>
+    <a href="../index.html" class="demo-hub-link">◀ Demo Hub</a>
     <h1>Pillar 3 — Exclusive Member Product Access</h1>
     <p>Click-through demo prototype. Synthetic data only. Not connected to any real backend.</p>
     <div class="variant-toggle" id="scenarioToggle">
       <span>Demo scenario (PRD v2 §7.2):</span>
       <!-- Buttons injected by app.js from shared PILLAR3.SCENARIOS -->
     </div>
-    <div class="variant-toggle">
-      <span>Checkout mechanism:</span>
-      <button id="variantABtn" class="variant-btn active" data-variant="A">Variant A — Invoice link</button>
-      <button id="variantBBtn" class="variant-btn" data-variant="B">Variant B — Discount code</button>
-    </div>
   </div>
 
   <div class="phone">
     <div class="phone-notch"></div>
-    <div class="statusbar">
+    <!-- Hand-coded statusbar/nav below are only shown for screens that have no real
+         screenshot (offerDetail, searchEmpty, instore/account placeholder).
+         Home/Explore/Rewards render real screenshots that already have a real
+         status bar + nav bar baked into their pixels, so app.js hides both of
+         these elements while one of those three is active. -->
+    <div class="statusbar" id="statusBar">
       <span>11:04</span>
       <span class="statusbar-icons">•••• 5G 🔋</span>
     </div>
@@ -66,8 +66,7 @@
   </div>
 
   <div class="rig-footer">
-    <p><strong>Walkthrough path:</strong> Home → tap "Members-Only Access" card → Offer Detail → Unlock → Redirect → Checkout → Confirmation</p>
-    <p><strong>Also try:</strong> Explore tab → search "Aurora Trail Jacket" to see the negative/non-gated case (US-3).</p>
+    <p><strong>Walkthrough path:</strong> Rewards tab → tap "Gymshark — Member Exclusive" card → Offer Detail → Unlock This Item → real navigation to the merchant Shopify demo surface.</p>
     <button id="resetBtn" class="reset-btn">Reset demo</button>
   </div>
 

@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pillar 3 — High-Fidelity Scenario Walkthrough</title>
+<link rel="stylesheet" href="deck-v2.css">
+</head>
+<body>
+
+<!-- ============================== ICON DEFS ============================== -->
+<svg style="display:none">
+  <defs>
+    <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>
+    </symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="5 13 9 17 19 7"/>
+    </symbol>
+    <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/>
+    </symbol>
+    <symbol id="i-jacket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9 4 6.2 6 4.3 9.2 6.3 11.3 7.5 10.2V20h9v-9.8l1.2 1.1 2-2.1L18 6l-2.8-2-3.2 2.3z"/>
+      <path d="M12 6.5V20"/>
+    </symbol>
+    <symbol id="i-mountain" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 19h18"/><path d="M4 19 10 7l3 4.5L15.5 8 20 19"/>
+    </symbol>
+    <symbol id="i-gift" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="8" width="18" height="13" rx="1"/><path d="M12 8v13"/><path d="M3 8h18"/>
+      <path d="M12 8c-1.2 0-3-1-3-2.5S10.3 3 12 4.5C13.7 3 15 4 15 5.5S13.2 8 12 8Z"/>
+    </symbol>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+    </symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/>
+    </symbol>
+    <symbol id="i-cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>
+    </symbol>
+    <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5a1 1 0 0 0 1 1H9a1 1 0 0 0 1-1V15a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4.5a1 1 0 0 0 1 1h2.5a1 1 0 0 0 1-1V10"/>
+    </symbol>
+    <symbol id="i-rewards" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="9" width="18" height="11" rx="1.5"/><path d="M12 9v11M3 9V7a1.5 1.5 0 0 1 1.5-1.5H9A3 3 0 0 1 12 8a3 3 0 0 1 3-2.5h4.5A1.5 1.5 0 0 1 21 7v2"/>
+    </symbol>
+    <symbol id="i-account" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="8" r="4"/><path d="M4 20c0-3.5 3.5-6 8-6s8 2.5 8 6"/>
+    </symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ============================================================ -->
+<!-- SLIDE 1 — COVER                                               -->
+<!-- ============================================================ -->
+<section class="slide slide--divider">
+  <div class="slide-eyebrow on-dark">RAKUTEN × SHOPIFY PARTNERSHIP</div>
+  <div class="cover-kicker" style="align-self:flex-start; text-align:left; position:relative; z-index:2; margin-top:auto;">Scenario Walkthrough</div>
+  <h1 class="cover-title" style="align-self:flex-start; text-align:left;">The Exclusive &amp; Early Access Journey</h1>
+  <p class="cover-desc" style="align-self:flex-start; text-align:left;">Three member journeys, one gating mechanic, three different business reasons a merchant would send the offer at all — walked screen by screen, from discovery through attribution.</p>
+  <div class="cover-footnote" style="align-self:flex-start; text-align:left;">Screens shown are illustrative mockups of the intended member experience.</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 2 — CONTENTS                                            -->
+<!-- ============================================================ -->
+<section class="slide slide--text">
+  <div class="text-eyebrow">Contents</div>
+  <div class="text-title" style="margin-bottom:28px;">What's in this walkthrough</div>
+  <table class="deck-table">
+    <tbody>
+      <tr><td style="width:40px; color:var(--purple); font-weight:700;">01</td><td>The Question This Walkthrough Answers</td></tr>
+      <tr><td style="color:var(--purple); font-weight:700;">02</td><td>Scenario 1 — Exclusive Drop</td></tr>
+      <tr><td style="color:var(--purple); font-weight:700;">03</td><td>Scenario 2 — Early Access Window</td></tr>
+      <tr><td style="color:var(--purple); font-weight:700;">04</td><td>Scenario 3 — Lapsed Re-engagement</td></tr>
+      <tr><td style="color:var(--purple); font-weight:700;">05</td><td>One Flow, Three Reasons to Use It</td></tr>
+      <tr><td style="color:var(--purple); font-weight:700;">06</td><td>Proving the Negative Case</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ============================================================ -->
+<!-- SLIDE 3 — THE QUESTION THIS WALKTHROUGH ANSWERS               -->
+<!-- ============================================================ -->
+<section class="slide slide--text">
+  <div class="text-eyebrow">Section 01</div>
+  <div class="text-title">The Question This Walkthrough Answers</div>
+  <div class="text-deck">Not "what does the screen look like" — "what has to be true for this to work"</div>
+  <div class="text-body">
+    <p>This partnership makes one specific claim: <strong>a product can be made exclusively available through Rakuten, and Rakuten can prove — not just assert — that it was the reason the sale happened.</strong> Everything in this walkthrough exists to make that claim concrete, scenario by scenario.</p>
+  </div>
+  <table class="deck-table">
+    <thead><tr><th style="width:60%;">What has to be true</th><th>Where it's tested in the journey</th></tr></thead>
+    <tbody>
+      <tr><td>The offer has to feel like it was <em>selected for this member</em>, not a generic coupon with an "exclusive" sticker slapped on</td><td>Scenario 1 — discovery &amp; offer detail</td></tr>
+      <tr><td>The member has to trust the handoff from Rakuten's site to a merchant's site enough to actually buy — and the product genuinely has to be unreachable any other way</td><td>Scenario 1 — redirect &amp; merchant landing</td></tr>
+      <tr><td>Rakuten has to be able to show, not tell, that it gets credit for the sale</td><td>Scenario 1 — confirmation &amp; attribution proof</td></tr>
+      <tr><td>The same mechanic has to answer a different, specific merchant business question depending on who's targeted</td><td>Scenarios 2 &amp; 3 — Early Access and Lapsed Re-engagement</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ============================================================ -->
+<!-- SCENARIO 1 — EXCLUSIVE DROP                                   -->
+<!-- ============================================================ -->
+
+<section class="slide slide--divider">
+  <div class="slide-eyebrow on-dark">SCENARIO 1</div>
+  <div class="divider-headline">
+    <span class="kicker">Exclusive Drop</span>
+    <span class="lead">"Can you get me buyers I couldn't reach myself?"</span>
+  </div>
+  <div class="divider-sub">An engaged member with category affinity — no prior relationship with the merchant required. Arc lifecycle stage: <strong style="color:#fff;">Active</strong>.</div>
+</section>
+
+<!-- 1.1 Discovery -->
+<section class="slide slide--content">
+  <div>
+    <div class="rail-step">Scenario 1</div>
+    <div class="rail-title">1. Discovery</div>
+    <p class="rail-sub">The member opens the app and sees the offer right away — we want them to feel lucky they were selected.</p>
+  </div>
+  <div class="frame-stage">
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-statusbar"><span>11:04</span><span>••• 5G 🔋</span></div>
+      <div class="phone-screen">
+        <div class="r-search-bar">🔍 Try searching Expedia</div>
+        <div class="r-tabs"><span class="r-tab-pill active">Today</span><span class="r-tab-pill">For you</span></div>
+        <div class="r-hero-card">
+          <span class="r-lock-badge"><svg class="icon" style="width:11px;height:11px;"><use href="#i-lock"/></svg> EXCLUSIVE ACCESS</span>
+          <h3>Members-Only Access</h3>
+          <p>You have first access — before other Rakuten members.</p>
+          <span class="r-pill-btn">View Access</span>
+        </div>
+        <div class="r-section-title">Shop with your welcome reward</div>
+        <div class="r-store-grid">
+          <div><div class="r-store-tile" style="background:#111;">Amazon</div><div class="r-store-label">Amazon</div><div class="r-store-rate">$5 Cash Back</div></div>
+          <div><div class="r-store-tile" style="background:#E1291F;">eBay</div><div class="r-store-label">eBay</div><div class="r-store-rate">Up to 11%</div></div>
+          <div><div class="r-store-tile" style="background:#0A4FA8;">Best Buy</div><div class="r-store-label">Best Buy</div><div class="r-store-rate">Up to 17.5%</div></div>
+        </div>
+      </div>
+      <div class="phone-bottom-nav">
+        <div class="phone-nav-item active"><svg class="icon" style="width:16px;height:16px;"><use href="#i-home"/></svg>Home</div>
+        <div class="phone-nav-item"><svg class="icon" style="width:16px;height:16px;"><use href="#i-search"/></svg>Explore</div>
+        <div class="phone-nav-item"><svg class="icon" style="width:16px;height:16px;"><use href="#i-rewards"/></svg>Rewards</div>
+        <div class="phone-nav-item"><svg class="icon" style="width:16px;height:16px;"><use href="#i-pin"/></svg>In-Store</div>
+        <div class="phone-nav-item"><svg class="icon" style="width:16px;height:16px;"><use href="#i-account"/></svg>Account</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 1.2 Offer Detail -->
+<section class="slide slide--content">
+  <div>
+    <div class="rail-step">Scenario 1</div>
+    <div class="rail-title">2. Offer Detail</div>
+    <p class="rail-sub">The member taps into the offer and sees what it actually is before deciding to continue.</p>
+  </div>
+  <div class="frame-stage">
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-statusbar"><span>11:04</span><span>••• 5G 🔋</span></div>
+      <div class="phone-screen">
+        <div class="r-back-row">← Back</div>
+        <div class="r-product-tile"><svg class="icon glyph" style="color:white;"><use href="#i-jacket"/></svg></div>
+        <div class="r-exclusive-tag"><svg class="icon" style="width:11px;height:11px;"><use href="#i-lock"/></svg> EXCLUSIVE ACCESS</div>
+        <div class="r-product-title">Aurora Trail Jacket</div>
+        <div class="r-product-price">$228.00</div>
+        <div class="r-countdown-row">
+          <div class="r-countdown-box"><div class="r-countdown-label">Spots remaining</div><div class="r-countdown-value">47 / 200</div></div>
+          <div class="r-countdown-box"><div class="r-countdown-label">Cashback rate</div><div class="r-countdown-value">8%</div></div>
+        </div>
+        <div class="r-eligibility-note"><span class="r-demo-flag">Demo simplification</span>Available to select members.</div>
+        <div class="r-full-btn">Unlock This Item</div>
+      </div>
+      <div class="phone-bottom-nav">
+        <div class="phone-nav-item active"><svg class="icon" style="width:16px;height:16px;"><use href="#i-home"/></svg>Home</div>
+        <div class="phone-nav-item"><svg class="icon" style="width:16px;height:16px;"><use href="#i-search"/></svg>Explore</div>
+        <div class="phone-nav-item"><svg class="icon" style="width:16px;height:16px;"><use href="#i-rewards"/></svg>Rewards</div>
+        <div class="phone-nav-item"><svg class="icon" style="width:16px;height:16px;"><use href="#i-pin"/></svg>In-Store</div>
+        <div class="phone-nav-item"><svg class="icon" style="width:16px;height:16px;"><use href="#i-account"/></svg>Account</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 1.3 Redirect / tracking interstitial -->
+<section class="slide slide--content">
+  <div>
+    <div class="rail-step">Scenario 1</div>
+    <div class="rail-title">3. Redirect &amp; Tracking</div>
+    <p class="rail-sub">The member taps to continue and is carried from the Rakuten app to the merchant — the same kind of handoff that already happens today, just with the click tracked against their identity along the way.</p>
+  </div>
+  <div class="frame-stage">
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-statusbar"><span>11:04</span><span>••• 5G 🔋</span></div>
+      <div class="phone-screen">
+        <div class="r-redirect-wrap">
+          <div class="r-spinner"></div>
+          <h3>Redirecting you to your exclusive access checkout…</h3>
+          <p>Tracking your access via Rakuten — do not close this window.</p>
+          <div class="r-trace">
+            <div class="ok">✓ Member authenticated (member_id: rkt_test_00219)</div>
+            <div class="ok">✓ Click logged against member identity</div>
+            <div>… resolving gated destination on merchant store <span class="flag">[step depends on Impact.com confirmation]</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="phone-bottom-nav">
+        <div class="phone-nav-item"><svg class="icon" style="width:16px;height:16px;"><use href="#i-home"/></svg>Home</div>
+        <div class="phone-nav-item"><svg class="icon" style="width:16px;height:16px;"><use href="#i-search"/></svg>Explore</div>
+        <div class="phone-nav-item"><svg class="icon" style="width:16px;height:16px;"><use href="#i-rewards"/></svg>Rewards</div>
+        <div class="phone-nav-item"><svg class="icon" style="width:16px;height:16px;"><use href="#i-pin"/></svg>In-Store</div>
+        <div class="phone-nav-item"><svg class="icon" style="width:16px;height:16px;"><use href="#i-account"/></svg>Account</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 1.4 Merchant landing — gated PDP -->
+<section class="slide slide--content">
+  <div>
+    <div class="rail-step">Scenario 1</div>
+    <div class="rail-title">4. Merchant Landing</div>
+    <p class="rail-sub">The member lands directly on the product at Northfield Outfitters — no browsing, no searching, just this page.</p>
+  </div>
+  <div class="frame-stage">
+    <div class="browser-frame">
+      <div class="browser-chrome"><span class="browser-dot red"></span><span class="browser-dot yellow"></span><span class="browser-dot green"></span><span class="browser-url">northfield-outfitters.myshopify.com/products/aurora-trail-jacket?ref=rkt_5591a</span></div>
+      <div class="browser-body shop-page">
+        <div class="shop-nav">
+          <div class="shop-brand"><svg class="icon" style="width:18px;height:18px;"><use href="#i-mountain"/></svg>Northfield Outfitters</div>
+          <div class="links">Shop&nbsp;&nbsp;About</div>
+          <div class="search"><svg class="icon" style="width:11px;height:11px;display:inline;"><use href="#i-search"/></svg>&nbsp; Search products…</div>
+          <div class="shop-cart"><svg class="icon" style="width:17px;height:17px;"><use href="#i-cart"/></svg><span class="count">1</span></div>
+        </div>
+        <div class="shop-pdp">
+          <div class="shop-media"><svg class="icon glyph" style="width:80px;height:80px;"><use href="#i-jacket"/></svg></div>
+          <div class="shop-info">
+            <div class="shop-exclusive-tag"><svg class="icon" style="width:11px;height:11px;"><use href="#i-lock"/></svg> EXCLUSIVE ACCESS — via Rakuten</div>
+            <div class="shop-title">Aurora Trail Jacket</div>
+            <div class="shop-price">$228.00</div>
+            <div class="shop-blurb">Weatherproof 3-layer shell built for alpine trail conditions.</div>
+            <div class="shop-countdown-row">
+              <div class="shop-countdown-box"><div class="shop-countdown-label">Spots remaining</div><div class="shop-countdown-value">47 / 200</div></div>
+              <div class="shop-countdown-box"><div class="shop-countdown-label">Cashback rate</div><div class="shop-countdown-value">8%</div></div>
+            </div>
+            <span class="shop-cta">Continue to Checkout</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 1.5 Checkout -->
+<section class="slide slide--content">
+  <div>
+    <div class="rail-step">Scenario 1</div>
+    <div class="rail-title">5. Checkout</div>
+    <p class="rail-sub">The member checks out with the discount already applied — no code to find or enter, nothing extra for them to do.</p>
+  </div>
+  <div class="frame-stage">
+    <div class="browser-frame">
+      <div class="browser-chrome"><span class="browser-dot red"></span><span class="browser-dot yellow"></span><span class="browser-dot green"></span><span class="browser-url">northfield-outfitters.myshopify.com/checkouts/cn/8214</span></div>
+      <div class="browser-body shop-page">
+        <div class="shop-checkout">
+          <h2>Checkout</h2>
+          <div class="shop-checkout-card">
+            <div class="shop-checkout-row"><span>🧥 Aurora Trail Jacket</span><span>$228.00</span></div>
+            <div class="shop-checkout-row"><span>Shipping</span><span>$0.00</span></div>
+          </div>
+          <div class="shop-discount-banner"><span><svg class="icon" style="width:12px;height:12px;"><use href="#i-lock"/></svg>&nbsp; Code applied: <span class="shop-code-chip">IMPACT-EXCL-A82F</span></span><span>-20%</span></div>
+          <div class="shop-checkout-card">
+            <div class="shop-checkout-row total"><span>Total</span><span>$182.40</span></div>
+          </div>
+          <button class="shop-pay-btn">Complete purchase</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 1.6 Confirmation + attribution proof -->
+<section class="slide slide--content">
+  <div>
+    <div class="rail-step">Scenario 1</div>
+    <div class="rail-title">6. Confirmation &amp; Attribution Proof</div>
+    <p class="rail-sub">The order completes, and the purchase is matched back to the member's original click — this panel is a demo-only view so the match can be seen directly, rather than just described.</p>
+  </div>
+  <div class="frame-stage">
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-statusbar"><span>11:04</span><span>••• 5G 🔋</span></div>
+      <div class="phone-screen">
+        <div class="r-confirm-check"><svg class="icon" style="width:22px;height:22px;"><use href="#i-check"/></svg></div>
+        <div class="r-confirm-title">Order Confirmed</div>
+        <div class="r-confirm-sub">Your exclusive item is on its way.</div>
+        <div class="r-checkout-card">
+          <div class="r-checkout-row"><span>🧥 Aurora Trail Jacket</span><span>$182.40</span></div>
+          <div class="r-checkout-row"><span>Order ID</span><span>SHF-88213</span></div>
+        </div>
+        <div class="r-attribution-panel">
+          <h4><svg class="icon" style="width:11px;height:11px;"><use href="#i-chart"/></svg> Attribution proof (demo view)</h4>
+          <div class="r-attribution-row"><span>Order ID</span><span>SHF-88213</span></div>
+          <div class="r-attribution-row"><span>Originating click</span><span>rkt_click_5591a</span></div>
+          <div class="r-attribution-row"><span>Member ID</span><span>rkt_test_00219</span></div>
+          <div class="r-matched-badge">Matched ✓ — Attributed to Rakuten</div>
+        </div>
+      </div>
+      <div class="phone-bottom-nav">
+        <div class="phone-nav-item active"><svg class="icon" style="width:16px;height:16px;"><use href="#i-home"/></svg>Home</div>
+        <div class="phone-nav-item"><svg class="icon" style="width:16px;height:16px;"><use href="#i-search"/></svg>Explore</div>
+        <div class="phone-nav-item"><svg class="icon" style="width:16px;height:16px;"><use href="#i-rewards"/></svg>Rewards</div>
+        <div class="phone-nav-item"><svg class="icon" style="width:16px;height:16px;"><use href="#i-pin"/></svg>In-Store</div>
+        <div class="phone-nav-item"><svg class="icon" style="width:16px;height:16px;"><use href="#i-account"/></svg>Account</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 1.7 Rakuten welcome-back (desktop) -->
+<section class="slide slide--content">
+  <div>
+    <div class="rail-step">Scenario 1</div>
+    <div class="rail-title">7. Closing the Loop</div>
+    <p class="rail-sub">The member returns to rakuten.com and sees a "Welcome back" panel confirming the purchase was matched — closing the loop from the original click to the completed sale.</p>
+  </div>
+  <div class="frame-stage">
+    <div class="browser-frame">
+      <div class="browser-chrome"><span class="browser-dot red"></span><span class="browser-dot yellow"></span><span class="browser-dot green"></span><span class="browser-url">rakuten.com/account/activity</span></div>
+      <div class="browser-body" style="background:var(--paper-2); padding:22px 26px;">
+        <div style="background:var(--green-tint); border:1px dashed var(--green); border-radius:9px; padding:12px 16px; margin-bottom:16px; font-family:var(--font-mono); font-size:11.5px;">
+          <div style="font-weight:700; color:#1C5B3D; margin-bottom:6px; font-family:var(--font-sans);">Welcome back — Attribution Proof</div>
+          <div style="display:flex; justify-content:space-between; padding:2px 0;"><span style="color:var(--ink-muted);">Order ID</span><span>SHF-88213</span></div>
+          <div style="display:flex; justify-content:space-between; padding:2px 0;"><span style="color:var(--ink-muted);">Originating click</span><span>rkt_click_5591a</span></div>
+          <div style="display:flex; justify-content:space-between; padding:2px 0;"><span style="color:var(--ink-muted);">Member ID</span><span>rkt_test_00219</span></div>
+          <div style="margin-top:8px; background:var(--green); color:white; text-align:center; border-radius:6px; padding:6px; font-weight:700; font-family:var(--font-sans);">Matched ✓ — Attributed to Rakuten</div>
+        </div>
+        <div class="r-hero-card" style="max-width:520px;">
+          <span class="r-lock-badge"><svg class="icon" style="width:11px;height:11px;"><use href="#i-lock"/></svg> EXCLUSIVE ACCESS</span>
+          <h3>Members-Only Access</h3>
+          <p>You have first access — before other Rakuten members.</p>
+          <span class="r-pill-btn">View Access</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SCENARIO 2 — EARLY ACCESS WINDOW                              -->
+<!-- ============================================================ -->
+
+<section class="slide slide--divider">
+  <div class="slide-eyebrow on-dark">SCENARIO 2</div>
+  <div class="divider-headline">
+    <span class="kicker">Early Access Window</span>
+    <span class="lead">"Can you make a new customer's first experience feel special?"</span>
+  </div>
+  <div class="divider-sub">A newly acquired member, given first access as a welcome moment. Arc lifecycle stage: <strong style="color:#fff;">Acquired</strong>. Only screens that diverge from Scenario 1 are shown below.</div>
+</section>
+
+<!-- 2.1 Discovery -->
+<section class="slide slide--content">
+  <div>
+    <div class="rail-step">Scenario 2</div>
+    <div class="rail-title">1. Discovery</div>
+    <p class="rail-sub">The member sees the same kind of offer as Scenario 1, but the framing shifts to a countdown until public launch — they're early, not exclusive forever.</p>
+  </div>
+  <div class="frame-stage">
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-statusbar"><span>11:04</span><span>••• 5G 🔋</span></div>
+      <div class="phone-screen">
+        <div class="r-search-bar">🔍 Try searching Expedia</div>
+        <div class="r-tabs"><span class="r-tab-pill active">Today</span><span class="r-tab-pill">For you</span></div>
+        <div class="r-hero-card">
+          <span class="r-lock-badge">EARLY ACCESS</span>
+          <h3>Early Access — Fall Collection Preview</h3>
+          <p>You've unlocked early access as a new Rakuten member — shop before anyone else.</p>
+          <span class="r-pill-btn">View Access</span>
+        </div>
+        <div class="r-section-title">Shop with your welcome reward</div>
+        <div class="r-store-grid">
+          <div><div class="r-store-tile" style="background:#111;">Amazon</div><div class="r-store-label">Amazon</div><div class="r-store-rate">$5 Cash Back</div></div>
+          <div><div class="r-store-tile" style="background:#E1291F;">eBay</div><div class="r-store-label">eBay</div><div class="r-store-rate">Up to 11%</div></div>
+          <div><div class="r-store-tile" style="background:#0A4FA8;">Best Buy</div><div class="r-store-label">Best Buy</div><div class="r-store-rate">Up to 17.5%</div></div>
+        </div>
+      </div>
+      <div class="phone-bottom-nav">
+        <div class="phone-nav-item active"><svg class="icon" style="width:16px;height:16px;"><use href="#i-home"/></svg>Home</div>
+        <div class="phone-nav-item"><svg class="icon" style="width:16px;height:16px;"><use href="#i-search"/></svg>Explore</div>
+        <div class="phone-nav-item"><svg class="icon" style="width:16px;height:16px;"><use href="#i-rewards"/></svg>Rewards</div>
+        <div class="phone-nav-item"><svg class="icon" style="width:16px;height:16px;"><use href="#i-pin"/></svg>In-Store</div>
+        <div class="phone-nav-item"><svg class="icon" style="width:16px;height:16px;"><use href="#i-account"/></svg>Account</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2.2 Merchant landing before window opens -->
+<section class="slide slide--content">
+  <div>
+    <div class="rail-step">Scenario 2</div>
+    <div class="rail-title">2. Merchant Landing — Before the Window Opens</div>
+    <p class="rail-sub">The member lands on the product early, ahead of everyone else, with a clear countdown to when it goes public.</p>
+  </div>
+  <div class="frame-stage">
+    <div class="browser-frame">
+      <div class="browser-chrome"><span class="browser-dot red"></span><span class="browser-dot yellow"></span><span class="browser-dot green"></span><span class="browser-url">northfield-outfitters.myshopify.com/products/fall-collection-preview?ref=rkt_early_02241</span></div>
+      <div class="browser-body shop-page">
+        <div class="shop-nav">
+          <div class="shop-brand"><svg class="icon" style="width:18px;height:18px;"><use href="#i-mountain"/></svg>Northfield Outfitters</div>
+          <div class="links">Shop&nbsp;&nbsp;About</div>
+          <div class="search"><svg class="icon" style="width:11px;height:11px;display:inline;"><use href="#i-search"/></svg>&nbsp; Search products…</div>
+          <div class="shop-cart"><svg class="icon" style="width:17px;height:17px;"><use href="#i-cart"/></svg><span class="count">0</span></div>
+        </div>
+        <div class="shop-pdp">
+          <div class="shop-media" style="position:relative;">
+            <svg class="icon glyph" style="width:80px;height:80px; opacity:0.35;"><use href="#i-jacket"/></svg>
+            <div class="shop-lock-panel" style="position:absolute; inset:20px;">
+              <svg class="icon glyph"><use href="#i-lock"/></svg>
+              <div class="msg">Goes public in 47:00:00 — you're in first as a Rakuten member.</div>
+            </div>
+          </div>
+          <div class="shop-info">
+            <div class="shop-exclusive-tag" style="background:var(--forest-mid);">EARLY ACCESS — via Rakuten</div>
+            <div class="shop-title">Fall Collection Preview</div>
+            <div class="shop-price">$228.00</div>
+            <div class="shop-blurb">Not yet listed on our public storefront — this link works only during the early access window.</div>
+            <div class="shop-countdown-row">
+              <div class="shop-countdown-box"><div class="shop-countdown-label">Goes public in</div><div class="shop-countdown-value">47:00:00</div></div>
+              <div class="shop-countdown-box"><div class="shop-countdown-label">Cashback rate</div><div class="shop-countdown-value">6%</div></div>
+            </div>
+            <span class="shop-cta">Continue to Checkout</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2.3 Checkout + confirmation (delta only) -->
+<section class="slide slide--content">
+  <div>
+    <div class="rail-step">Scenario 2</div>
+    <div class="rail-title">3. Checkout &amp; Confirmation</div>
+    <p class="rail-sub">The member checks out during the early window, before anyone else can reach the product at all.</p>
+  </div>
+  <div class="frame-stage">
+    <div class="browser-frame">
+      <div class="browser-chrome"><span class="browser-dot red"></span><span class="browser-dot yellow"></span><span class="browser-dot green"></span><span class="browser-url">northfield-outfitters.myshopify.com/checkouts/cn/9130</span></div>
+      <div class="browser-body shop-page">
+        <div class="shop-confirm">
+          <div class="check"><svg class="icon" style="width:20px;height:20px;"><use href="#i-check"/></svg></div>
+          <h2>Thanks for your order, Morgan T.!</h2>
+          <div class="sub">Order #SHF-88214 · $228.00 · Fall Collection Preview</div>
+          <div class="shop-attribution-note">You bought this 47 hours before it goes public — matched back to your Rakuten early-access click. This order is credited to Rakuten as the access enabler.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SCENARIO 3 — LAPSED RE-ENGAGEMENT                             -->
+<!-- ============================================================ -->
+
+<section class="slide slide--divider">
+  <div class="slide-eyebrow on-dark">SCENARIO 3</div>
+  <div class="divider-headline">
+    <span class="kicker">Lapsed Re-engagement</span>
+    <span class="lead">"Can you bring back someone I've already lost?"</span>
+  </div>
+  <div class="divider-sub">A member who bought before and went quiet 90+ days. Arc lifecycle stage: <strong style="color:#fff;">Churned</strong>. There's no ambiguity about whether the sale was already going to happen.</div>
+</section>
+
+<!-- 3.1 Merchant intelligence panel -->
+<section class="slide slide--content">
+  <div>
+    <div class="rail-step">Scenario 3</div>
+    <div class="rail-title">1. The Merchant's Question</div>
+    <p class="rail-sub">Before any member sees an offer, this is the business case that justifies sending one: Rakuten holds a signal the merchant structurally cannot generate on its own — its own lapsed buyers, ranked and quantified. This is the merchant-side payoff the rest of the scenario proves out.</p>
+  </div>
+  <div class="frame-stage">
+    <div class="dash-frame">
+      <div class="dash-header"><span class="brand">rakuten</span><span class="title">Merchant Intelligence — Northfield Outfitters</span><span class="live">Live</span></div>
+      <div class="dash-body">
+        <div class="dash-label">Your Biggest Opportunities Right Now</div>
+        <div class="dash-cards">
+          <div class="dash-card active">
+            <div class="tag">Lapsed Recovery</div>
+            <div class="stat">340</div>
+            <div class="desc">buyers haven't returned in 90+ days</div>
+            <div class="est">18% re-engagement rate at similar merchants. Est. <strong>$3,200 incremental GMV</strong>.</div>
+            <button>Launch Campaign →</button>
+          </div>
+          <div class="dash-card">
+            <div class="tag" style="color:#1976d2;">Browse-to-Buy</div>
+            <div class="stat">180</div>
+            <div class="desc">members browsed, didn't buy</div>
+            <div class="est" style="background:#e8f4fd;">Intent was there. Est. <strong>$1,800 incremental GMV</strong>.</div>
+            <button style="background:#1976d2;">Launch Campaign →</button>
+          </div>
+          <div class="dash-card">
+            <div class="tag" style="color:#2e7d32;">Category Match</div>
+            <div class="stat">4,200</div>
+            <div class="desc">affinity, never bought here</div>
+            <div class="est" style="background:#f0faf2;">Net-new acquisition. Est. <strong>$8,400 incremental GMV</strong>.</div>
+            <button style="background:#2e7d32;">Launch Campaign →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3.2 Discovery -->
+<section class="slide slide--content">
+  <div>
+    <div class="rail-step">Scenario 3</div>
+    <div class="rail-title">2. Discovery</div>
+    <p class="rail-sub">The framing shifts from "you were chosen" to "we've been waiting for you" — the elevated 10% cashback rate (vs. 8% for a first-time exclusive drop) and the 24-hour expiry both signal that Rakuten is spending real margin to win this specific member back, not sending a generic blast.</p>
+  </div>
+  <div class="frame-stage">
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-statusbar"><span>11:04</span><span>••• 5G 🔋</span></div>
+      <div class="phone-screen">
+        <div class="r-search-bar">🔍 Try searching Expedia</div>
+        <div class="r-tabs"><span class="r-tab-pill active">Today</span><span class="r-tab-pill">For you</span></div>
+        <div class="r-hero-card">
+          <span class="r-lock-badge">WE'VE HELD YOUR SPOT</span>
+          <h3>Welcome Back — Exclusive Offer</h3>
+          <p>We've held a spot for you. Exclusive access to Northfield Outfitters expires in 24 hours.</p>
+          <span class="r-pill-btn">View Access</span>
+        </div>
+        <div class="r-section-title">Shop with your welcome reward</div>
+        <div class="r-store-grid">
+          <div><div class="r-store-tile" style="background:#111;">Amazon</div><div class="r-store-label">Amazon</div><div class="r-store-rate">$5 Cash Back</div></div>
+          <div><div class="r-store-tile" style="background:#E1291F;">eBay</div><div class="r-store-label">eBay</div><div class="r-store-rate">Up to 11%</div></div>
+          <div><div class="r-store-tile" style="background:#0A4FA8;">Best Buy</div><div class="r-store-label">Best Buy</div><div class="r-store-rate">Up to 17.5%</div></div>
+        </div>
+      </div>
+      <div class="phone-bottom-nav">
+        <div class="phone-nav-item active"><svg class="icon" style="width:16px;height:16px;"><use href="#i-home"/></svg>Home</div>
+        <div class="phone-nav-item"><svg class="icon" style="width:16px;height:16px;"><use href="#i-search"/></svg>Explore</div>
+        <div class="phone-nav-item"><svg class="icon" style="width:16px;height:16px;"><use href="#i-rewards"/></svg>Rewards</div>
+        <div class="phone-nav-item"><svg class="icon" style="width:16px;height:16px;"><use href="#i-pin"/></svg>In-Store</div>
+        <div class="phone-nav-item"><svg class="icon" style="width:16px;height:16px;"><use href="#i-account"/></svg>Account</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3.3 Checkout + confirmation -->
+<section class="slide slide--content">
+  <div>
+    <div class="rail-step">Scenario 3</div>
+    <div class="rail-title">3. Checkout &amp; Confirmation</div>
+    <p class="rail-sub">Mechanically identical to Scenario 1's checkout — the same single-use discount code pattern, just at the elevated 10% rate. The story isn't in the mechanism here; it's in who was targeted and why, which is the point of showing the merchant panel first.</p>
+  </div>
+  <div class="frame-stage">
+    <div class="browser-frame">
+      <div class="browser-chrome"><span class="browser-dot red"></span><span class="browser-dot yellow"></span><span class="browser-dot green"></span><span class="browser-url">northfield-outfitters.myshopify.com/checkouts/cn/9204</span></div>
+      <div class="browser-body shop-page">
+        <div class="shop-confirm">
+          <div class="check"><svg class="icon" style="width:20px;height:20px;"><use href="#i-check"/></svg></div>
+          <h2>Thanks for your order, Priya K.!</h2>
+          <div class="sub">Order #SHF-88215 · $205.20 (10% off $228.00) · Aurora Trail Jacket</div>
+          <div class="shop-attribution-note"><strong>Without Rakuten, this sale doesn't happen.</strong> Priya's account had no purchase from Northfield Outfitters in 90+ days before this order — the merchant's dashboard flags this conversion as incremental, not just attributed.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3.4 Post-purchase email -->
+<section class="slide slide--content">
+  <div>
+    <div class="rail-step">Scenario 3</div>
+    <div class="rail-title">4. Post-Purchase Email</div>
+    <p class="rail-sub">The re-engagement story doesn't end at checkout. A short thank-you note ties the loop off in the member's inbox.</p>
+  </div>
+  <div class="frame-stage">
+    <div class="email-frame">
+      <div class="email-toolbar"><svg class="icon" style="width:15px;height:15px;"><use href="#i-cart"/></svg><div class="spacer"></div><span class="meta">2 of 43</span></div>
+      <div class="email-subject">Welcome back to Northfield Outfitters</div>
+      <div class="email-from-row">
+        <div class="email-avatar">R</div>
+        <div><span class="email-from-name">Rakuten Member Services</span><span class="email-from-addr">&lt;memberservices@messages.rakuten.com&gt;</span></div>
+        <span class="email-time">Now</span>
+      </div>
+      <div class="email-body">
+        <div class="email-lockup"><span class="r-word">Rakuten</span><span class="x">×</span><span class="merchant-word">Northfield Outfitters</span></div>
+        <div class="email-body-text">
+          <p>Hi Priya,</p>
+          <p>It's been a while since your last order from Northfield Outfitters — so we held a spot for you at 10% Cash Back, our highest welcome-back rate.</p>
+          <p>Your order for the Aurora Trail Jacket is confirmed. Here's what you earned:</p>
+        </div>
+        <div class="email-earn-block">
+          <div class="email-earn-amount">$20.52</div>
+          <div class="email-earn-label">in Cash Back, credited to your Rakuten account</div>
+        </div>
+        <span class="email-cta">View Order</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION — ONE FLOW, THREE REASONS                             -->
+<!-- ============================================================ -->
+<section class="slide slide--text">
+  <div class="text-eyebrow">Section 05</div>
+  <div class="text-title">One Flow, Three Reasons to Use It</div>
+  <div class="text-deck">The same mechanics, three different business justifications for why Rakuten should send this offer at all</div>
+  <div class="text-body">
+    <p>Everything above describes the mechanical journey — offer, handoff, purchase, proof. But the same exclusivity mechanic is only valuable to a merchant if it's aimed at a member for a reason the merchant actually cares about. The same screens play out differently depending on <em>why</em> Rakuten decided this member should see the offer:</p>
+  </div>
+  <table class="deck-table">
+    <thead><tr><th>Scenario</th><th>Who's being targeted</th><th>The merchant's actual question this answers</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Exclusive Drop</strong></td><td>An engaged member with category affinity — no prior relationship required</td><td>"Can you get me buyers I couldn't reach myself?"</td></tr>
+      <tr><td><strong>Early Access Window</strong></td><td>A newly acquired member, given first access as a welcome moment</td><td>"Can you make a new customer's first experience feel special?"</td></tr>
+      <tr><td><strong>Lapsed Re-engagement</strong></td><td>A member who bought before and went quiet 90+ days</td><td>"Can you bring back someone I've already lost?" — the sale that provably wouldn't have happened otherwise</td></tr>
+    </tbody>
+  </table>
+  <div class="callout callout-success">
+    <strong>Why Lapsed Re-engagement is worth calling out specifically</strong>
+    There's no ambiguity about whether the sale was already going to happen. A member who bought nothing in 90+ days, then buys the day after receiving this offer, is about as clean a causal story as a merchant is ever going to get.
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION — NEGATIVE CASE (US-3)                                -->
+<!-- ============================================================ -->
+<section class="slide slide--content">
+  <div>
+    <div class="rail-step">Section 06</div>
+    <div class="rail-title">Proving the Negative Case</div>
+    <p class="rail-sub">A real shopper searching Northfield Outfitters directly — not arriving via a Rakuten link — should find nothing. Gating that's secretly still findable through normal search isn't exclusive, it's just unlinked.</p>
+  </div>
+  <div class="frame-stage">
+    <div class="browser-frame">
+      <div class="browser-chrome"><span class="browser-dot red"></span><span class="browser-dot yellow"></span><span class="browser-dot green"></span><span class="browser-url">northfield-outfitters.myshopify.com/search?q=aurora+trail+jacket</span></div>
+      <div class="browser-body shop-page">
+        <div class="shop-nav">
+          <div class="shop-brand"><svg class="icon" style="width:18px;height:18px;"><use href="#i-mountain"/></svg>Northfield Outfitters</div>
+          <div class="links">Shop&nbsp;&nbsp;About</div>
+          <div class="search"><svg class="icon" style="width:11px;height:11px;display:inline;"><use href="#i-search"/></svg>&nbsp; aurora trail jacket</div>
+          <div class="shop-cart"><svg class="icon" style="width:17px;height:17px;"><use href="#i-cart"/></svg><span class="count">0</span></div>
+        </div>
+        <div class="empty-state" style="padding:56px 20px;">
+          <svg class="icon glyph" style="width:34px;height:34px;"><use href="#i-search"/></svg>
+          <h3>No results found for "aurora trail jacket"</h3>
+          <p>This item isn't listed in our catalog or search — some products are only available through special access links, and this one is member-only, permanently.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

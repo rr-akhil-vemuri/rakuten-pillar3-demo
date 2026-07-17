@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Northfield Outfitters — Merchant Storefront Demo</title>
+<title>Gymshark — Merchant Storefront Demo</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -12,70 +12,18 @@
   <a class="demo-hub-link" href="../index.html">◀ Demo Hub</a>
 </div>
 
-<nav class="merchant-nav">
-  <div class="nav-inner">
-    <div class="brand">
-      <span class="brand-mark">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M3 19h18"/>
-          <path d="M4 19 10 7l3 4.5L15.5 8 20 19"/>
-        </svg>
-      </span>
-      <span class="brand-name">Northfield Outfitters</span>
-    </div>
-    <div class="nav-links">
-      <a id="navShop">Shop</a>
-      <a id="navAbout">About</a>
-    </div>
-    <div class="nav-right">
-      <div class="nav-search">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>
-        <input type="text" id="merchantSearch" placeholder="Search products...">
-      </div>
-      <button class="nav-cart" id="navCart" type="button" aria-label="Cart">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-        <span class="cart-count">2</span>
-      </button>
-    </div>
+<div class="scenario-controls" id="scenarioControls">
+  <div class="scenario-row" id="scenarioRow">
+    <span class="scenario-label">Demo scenario (PRD v2 §7.2):</span>
+    <!-- Buttons injected by app.js from shared PILLAR3.SCENARIOS -->
   </div>
-</nav>
-
-<div class="scenario-row" id="scenarioRow">
-  <span class="scenario-label">Demo scenario (PRD v2 §7.2):</span>
-  <!-- Buttons injected by app.js from shared PILLAR3.SCENARIOS -->
 </div>
 
 <main class="view-root" id="viewRoot">
-  <!-- Views injected by app.js -->
+  <!-- Views injected by app.js: just the real Gymshark screenshot plus a
+       minimal Rakuten overlay, one view at a time. No hand-coded merchant
+       nav, footer, or extra pages — the real screenshot IS the page. -->
 </main>
-
-<footer class="site-footer">
-  <div class="footer-inner">
-    <div class="footer-col">
-      <h4>Quick Links</h4>
-      <a href="#" onclick="return false;">Shop</a>
-      <a href="#" onclick="return false;">About</a>
-      <a href="#" onclick="return false;">Our Story</a>
-    </div>
-    <div class="footer-col">
-      <h4>Customer Care</h4>
-      <a href="#" onclick="return false;">Shipping</a>
-      <a href="#" onclick="return false;">Returns</a>
-      <a href="#" onclick="return false;">Contact</a>
-    </div>
-    <div class="footer-col footer-newsletter">
-      <h4>Stay in the Loop</h4>
-      <p>New arrivals and trail tips, straight to your inbox.</p>
-      <form class="newsletter-form" onsubmit="return false;">
-        <input type="email" placeholder="Email address" aria-label="Email address">
-        <button type="submit">Sign Up</button>
-      </form>
-    </div>
-  </div>
-  <div class="footer-legal">
-    <p>Prototype for internal demo purposes only. Synthetic data. Not connected to production systems or any real merchant.</p>
-  </div>
-</footer>
 
 <script src="../shared/products.js"></script>
 <script src="../shared/lifecycle-data.js"></script>

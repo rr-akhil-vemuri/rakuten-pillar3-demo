@@ -1,3 +1,11 @@
-# Demos
+# Pillar 3 Demo — Exclusive Member Product Access
 
-This directory will hold demo build artifacts (scripts, seed data, screen recordings, walkthrough notes) once Pillar 1–3 implementation begins for the Aug 14, 2026 executive demo. Design outlines live in `/design` — start there before building.
+Click-through prototype suite for the Rakuten × Shopify × Impact.com Pillar 3 concept
+(exclusive/early member product access). Static HTML/CSS/JS, no backend, synthetic data
+only. Live at: https://rr-akhil-vemuri.github.io/rakuten-pillar3-demo/
+
+Start at `index.html` for the demo hub linking both surfaces:
+
+- `pillar-3-exclusive-access/` — Rakuten mobile app experience
+- `pillar-3-merchant-shopify/` — merchant Shopify storefront (Gymshark)
+- `walkthrough/` — PDF walkthrough deck for external (Impact.com) review

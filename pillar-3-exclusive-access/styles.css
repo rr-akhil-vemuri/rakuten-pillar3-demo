@@ -7,7 +7,7 @@
   --text: #1A1A1A;
   --text-muted: #6B6B75;
   --green: #1E8E5A;
-  --gold: #C9A227;
+  --rakuten-red: #BF0D3E;
   --border: #E7E4EF;
   --white: #FFFFFF;
 }
@@ -127,6 +127,86 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* ---------- Real-screenshot screens (Home/Explore/Rewards) ----------
+   Full-bleed real Rakuten app screenshots (see design/assets/) instead of
+   hand-coded CSS UI. No .screen padding — the image should run edge to edge
+   like the real app. Invisible % -positioned hotspot buttons sit on top for
+   tab navigation + the composited Rewards card, so they scale correctly at
+   any display width. */
+
+.screen.shot-screen {
+  padding: 0;
+}
+
+.shot-wrap {
+  position: relative;
+  width: 100%;
+  line-height: 0;
+  container-type: inline-size;
+}
+
+.shot-img {
+  width: 100%;
+  display: block;
+}
+
+/* ---------- Rewards card text overlay (scenario-aware) ----------
+ * The composited Rewards screenshot (rakuten-app-rewards-composited.png) now
+ * carries the card's background/badge/border only — its title+description
+ * text was cleared out of the pixels so real HTML text can render on top,
+ * driven by REWARDS_CARD_COPY[state.scenario] (see renderRewards() in
+ * app.js). This is what lets the card's copy change per scenario; a static
+ * baked-in text region couldn't. Coordinates/colors/cqw font sizes were
+ * measured directly off the original screenshot pixels (919px-wide native
+ * image) so the overlay lines up with the real card's badge and border.
+ * `cqw` units (relative to .shot-wrap's own inline size, set via
+ * container-type above) keep the text scaling in lockstep with the
+ * screenshot at any display width, the same way the % -positioned hotspots
+ * already do. */
+.rewards-card-overlay {
+  position: absolute;
+  left: 31.23%;
+  top: 30.423%;
+  width: 62%;
+  height: 10.563%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.5cqw;
+  pointer-events: none;
+}
+
+.rewards-card-overlay .rc-title {
+  margin: 0;
+  font-weight: 800;
+  font-size: 2.85cqw;
+  line-height: 1.25;
+  color: #221F2E;
+}
+
+.rewards-card-overlay .rc-desc {
+  margin: 0;
+  font-weight: 400;
+  font-size: 2.55cqw;
+  line-height: 1.32;
+  color: #4A4756;
+}
+
+.hotspot {
+  position: absolute;
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hotspot:focus-visible {
+  outline: 2px solid var(--purple);
+  outline-offset: 2px;
+}
+
 .bottom-nav {
   display: flex;
   border-top: 1px solid var(--border);
@@ -214,107 +294,6 @@ body {
   margin: 18px 0 10px;
 }
 
-.category-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px 8px;
-}
-
-.category-tile {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  cursor: pointer;
-  background: none;
-  border: none;
-  font-family: inherit;
-}
-
-.category-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: var(--lavender);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-}
-
-.category-icon.exclusive {
-  background: var(--gradient-exclusive);
-  color: white;
-}
-
-.category-tile span:last-child {
-  font-size: 11px;
-  text-align: center;
-  color: var(--text);
-}
-
-.hero-card {
-  border-radius: 18px;
-  padding: 20px;
-  color: white;
-  margin: 14px 0;
-  background: var(--purple);
-  position: relative;
-  overflow: hidden;
-}
-
-.hero-card.exclusive-card {
-  background: var(--gradient-exclusive);
-  border: 1px solid #6B3FA0;
-}
-
-.hero-card .eyebrow {
-  font-size: 12px;
-  opacity: 0.85;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 6px;
-}
-
-.hero-card h3 {
-  font-size: 20px;
-  margin: 0 0 8px;
-  font-weight: 800;
-  line-height: 1.2;
-}
-
-.hero-card p {
-  font-size: 13px;
-  margin: 0 0 14px;
-  opacity: 0.9;
-}
-
-.pill-btn {
-  display: inline-block;
-  background: white;
-  color: var(--purple-dark);
-  border-radius: 999px;
-  padding: 8px 18px;
-  font-size: 13px;
-  font-weight: 700;
-  border: none;
-  cursor: pointer;
-  font-family: inherit;
-}
-
-.exclusive-card .pill-btn {
-  background: white;
-  color: #1A0E2B;
-}
-
-.lifecycle-chip {
-  font-size: 10px;
-  color: rgba(255,255,255,0.7);
-  margin-bottom: 10px;
-  font-style: italic;
-}
-
 .countdown-row {
   display: flex;
   gap: 8px;
@@ -342,51 +321,18 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
-.lock-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  background: rgba(255,255,255,0.15);
-  border: 1px solid rgba(255,255,255,0.4);
-  border-radius: 999px;
-  padding: 3px 10px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
+/* Urgency treatment for the lapsed-reengagement scenario's "spot expires in
+   24 hours" countdown — a real expiry deadline reads as more urgent than the
+   other scenarios' informational counters, so it gets Rakuten's red accent
+   instead of the purple used everywhere else on this surface (see
+   renderOfferDetail() in app.js, which applies this class only for that one
+   scenario's countdown box). */
+.countdown-box.urgent {
+  background: #FDEAEF;
 }
 
-.store-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-}
-
-.store-tile {
-  border-radius: 10px;
-  height: 56px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: 800;
-  font-size: 13px;
-}
-
-.store-label {
-  font-size: 12px;
-  margin-top: 6px;
-  font-weight: 600;
-}
-
-.store-rate {
-  font-size: 12px;
-  color: var(--purple);
-  font-weight: 700;
-}
-
-.store-rate-was {
-  font-size: 11px;
-  color: var(--text-muted);
+.countdown-box.urgent .countdown-value {
+  color: var(--rakuten-red);
 }
 
 /* Offer detail screen */
@@ -410,9 +356,15 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 56px;
   margin-bottom: 16px;
   color: white;
+  overflow: hidden;
+}
+
+.product-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .exclusive-tag {
@@ -439,26 +391,6 @@ body {
   font-weight: 800;
   color: var(--text);
   margin-bottom: 10px;
-}
-
-.eligibility-note {
-  background: var(--lavender);
-  border-radius: 10px;
-  padding: 10px 14px;
-  font-size: 12px;
-  color: var(--text-muted);
-  margin-bottom: 16px;
-  border-left: 3px solid var(--purple);
-}
-
-.demo-flag {
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: #A6862F;
-  font-weight: 700;
-  display: block;
-  margin-bottom: 3px;
 }
 
 .full-btn {
@@ -493,396 +425,6 @@ body {
   cursor: pointer;
 }
 
-/* Redirect / loading screen */
-
-.redirect-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  min-height: 480px;
-  text-align: center;
-  padding: 40px 24px;
-}
-
-.spinner {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 4px solid var(--lavender);
-  border-top-color: var(--purple);
-  animation: spin 0.9s linear infinite;
-  margin-bottom: 20px;
-}
-
-@keyframes spin { to { transform: rotate(360deg); } }
-
-.redirect-wrap h3 {
-  font-size: 16px;
-  margin: 0 0 8px;
-}
-
-.redirect-wrap p {
-  font-size: 12px;
-  color: var(--text-muted);
-  margin: 0;
-}
-
-.redirect-trace {
-  margin-top: 24px;
-  background: #F7F5FC;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 12px;
-  font-size: 11px;
-  color: var(--text-muted);
-  text-align: left;
-  width: 100%;
-  font-family: "SF Mono", Menlo, monospace;
-}
-
-.redirect-trace div { margin-bottom: 3px; }
-.redirect-trace .ok { color: var(--green); }
-
-/* Checkout screens */
-
-.checkout-card {
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 16px;
-  margin-bottom: 14px;
-}
-
-.checkout-row {
-  display: flex;
-  justify-content: space-between;
-  font-size: 13px;
-  padding: 6px 0;
-}
-
-.checkout-row.total {
-  font-weight: 800;
-  font-size: 15px;
-  border-top: 1px solid var(--border);
-  margin-top: 6px;
-  padding-top: 10px;
-}
-
-.discount-applied {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: #EAF7EF;
-  border: 1px solid #BFE6CC;
-  border-radius: 10px;
-  padding: 10px 12px;
-  font-size: 12px;
-  color: var(--green);
-  font-weight: 700;
-  margin-bottom: 14px;
-}
-
-
-/* --- Variant A: in-app browser chrome + Shopify-hosted checkout page ---
-   The draft-order invoice link opens a real Shopify checkout domain, so this
-   is styled deliberately unlike the rest of the Rakuten-branded phone UI. */
-
-.screen.shopify-screen {
-  padding: 0;
-}
-
-.inapp-browserbar {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 9px 14px;
-  background: #F1F0F2;
-  border-bottom: 1px solid #DEDCE1;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-}
-
-.inapp-lock {
-  display: flex;
-  color: #7A7883;
-  flex-shrink: 0;
-}
-
-.inapp-lock svg {
-  width: 13px;
-  height: 13px;
-}
-
-.inapp-url {
-  flex: 1;
-  text-align: center;
-  font-size: 11px;
-  color: #7A7883;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.inapp-close {
-  flex-shrink: 0;
-  font-size: 13px;
-  color: #7A7883;
-  cursor: pointer;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.shopify-page {
-  padding: 18px 20px 28px;
-  background: #FAFAFA;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  color: #202223;
-}
-
-.shopify-merchant-header {
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-  margin-bottom: 16px;
-  color: #202223;
-}
-
-.shopify-order-summary {
-  background: #FFFFFF;
-  border: 1px solid #E3E3E3;
-  border-radius: 8px;
-  padding: 12px 14px;
-  margin-bottom: 18px;
-}
-
-.shopify-summary-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding-bottom: 10px;
-  margin-bottom: 8px;
-  border-bottom: 1px solid #EDEDED;
-}
-
-.shopify-thumb {
-  width: 36px;
-  height: 36px;
-  border-radius: 6px;
-  background: #F1F1F1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 17px;
-  flex-shrink: 0;
-}
-
-.shopify-summary-name {
-  flex: 1;
-  font-size: 13px;
-}
-
-.shopify-summary-price {
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.shopify-summary-line {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  color: #6B6B6B;
-  padding: 3px 0;
-}
-
-.shopify-summary-line.total {
-  color: #202223;
-  font-weight: 700;
-  font-size: 13px;
-  border-top: 1px solid #EDEDED;
-  margin-top: 4px;
-  padding-top: 8px;
-}
-
-.shopify-section {
-  margin-bottom: 18px;
-}
-
-.shopify-section-label {
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: #6B6B6B;
-  margin-bottom: 6px;
-}
-
-.shopify-field {
-  border: 1px solid #D5D5D7;
-  border-radius: 6px;
-  padding: 10px 12px;
-  font-size: 13px;
-}
-
-.shopify-field.muted {
-  background: #F3F3F4;
-  color: #8C8B92;
-}
-
-.shopify-address {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.shopify-shipping-method {
-  display: flex;
-  justify-content: space-between;
-  border: 1px solid #D5D5D7;
-  border-radius: 6px;
-  padding: 10px 12px;
-  font-size: 13px;
-  background: #FFFFFF;
-}
-
-.shopify-card-icons {
-  display: flex;
-  gap: 6px;
-  margin-bottom: 10px;
-}
-
-.card-chip {
-  border: 1px solid #C9C9CC;
-  border-radius: 4px;
-  padding: 3px 7px;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  color: #9A999F;
-  background: #FFFFFF;
-}
-
-.shopify-pay-btn {
-  width: 100%;
-  background: #1A1A1A;
-  color: #FFFFFF;
-  border: none;
-  border-radius: 6px;
-  padding: 14px;
-  font-size: 15px;
-  font-weight: 700;
-  cursor: pointer;
-  font-family: inherit;
-}
-
-.shopify-pay-btn:disabled {
-  background: #B7B6BB;
-  cursor: not-allowed;
-}
-
-.shopify-footer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  margin-top: 20px;
-  text-align: center;
-}
-
-.shopify-secure {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 11px;
-  color: #6B6B6B;
-}
-
-.shopify-secure svg {
-  width: 12px;
-  height: 12px;
-}
-
-.shopify-powered {
-  font-size: 11px;
-  color: #ACACAC;
-}
-
-/* Confirmation screen */
-
-.confirm-check {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: #EAF7EF;
-  color: var(--green);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 32px;
-  margin: 20px auto 12px;
-}
-
-.confirm-title {
-  text-align: center;
-  font-size: 18px;
-  font-weight: 800;
-  margin-bottom: 4px;
-}
-
-.confirm-sub {
-  text-align: center;
-  font-size: 12px;
-  color: var(--text-muted);
-  margin-bottom: 20px;
-}
-
-.attribution-panel {
-  background: #FBF9FF;
-  border: 1px dashed var(--purple);
-  border-radius: 12px;
-  padding: 14px;
-  margin-top: 8px;
-}
-
-.attribution-panel h4 {
-  font-size: 12px;
-  margin: 0 0 10px;
-  color: var(--purple-dark);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.attribution-row {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  padding: 5px 0;
-  font-family: "SF Mono", Menlo, monospace;
-}
-
-.attribution-row span:first-child { color: var(--text-muted); }
-
-.matched-badge {
-  margin-top: 10px;
-  background: var(--green);
-  color: white;
-  text-align: center;
-  border-radius: 8px;
-  padding: 8px;
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.demo-note-banner {
-  margin-top: 14px;
-  font-size: 11px;
-  color: var(--text-muted);
-  text-align: center;
-}
-
 /* Negative case */
 
 .empty-state {
@@ -914,51 +456,11 @@ body {
   font-size: 13px;
 }
 
-/* Rewards tab reuse */
+/* ---------- Clean mode (?clean=1) — hides internal demo/presenter chrome
+   (title, hub link, scenario/variant toggles, walkthrough instructions) so
+   a screenshot shows only the phone screen a real shopper would see. ---------- */
 
-.reward-item {
-  display: flex;
-  gap: 12px;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 14px;
-  margin-bottom: 12px;
-  align-items: flex-start;
-}
-
-.reward-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: var(--lavender);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  flex-shrink: 0;
-}
-
-.reward-title { font-weight: 700; font-size: 13px; }
-.reward-desc { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
-.reward-amount { color: var(--purple); font-weight: 700; font-size: 13px; }
-
-.tabs-row {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 14px;
-}
-
-.tab-pill {
-  border-radius: 999px;
-  padding: 6px 14px;
-  font-size: 13px;
-  border: 1px solid var(--border);
-  color: var(--text-muted);
-  background: white;
-}
-
-.tab-pill.active {
-  background: var(--purple);
-  color: white;
-  border-color: var(--purple);
+body.clean-shot .rig-header,
+body.clean-shot .rig-footer {
+  display: none;
 }

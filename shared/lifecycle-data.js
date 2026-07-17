@@ -11,7 +11,7 @@
 
 window.PILLAR3 = window.PILLAR3 || {};
 
-PILLAR3.MERCHANT_NAME = "Northfield Outfitters";
+PILLAR3.MERCHANT_NAME = "Gymshark";
 
 PILLAR3.SCENARIOS = [
   {
@@ -53,6 +53,17 @@ PILLAR3.SCENARIOS = [
     cashbackRate: "10%",
     searchEmptyCopy: "This item isn't listed in our catalog or search — some products are only available through special access links.",
   },
+  {
+    key: "prospect-unlock",
+    navLabel: "Scenario 4 — Prospect Unlock",
+    accessMode: "prospect",
+    lifecycleStage: "prospect",
+    badgeText: "RAKUTEN EXCLUSIVE",
+    heroHeadline: "Join Rakuten to Unlock This Price",
+    hook: "This item is exclusively priced for Rakuten members — join free to see your cashback rate.",
+    cashbackRate: "8%",
+    searchEmptyCopy: "This item isn't listed in our catalog or search — some products are only available through special access links.",
+  },
 ];
 
 PILLAR3.LIFECYCLE_LABELS = {
@@ -60,6 +71,7 @@ PILLAR3.LIFECYCLE_LABELS = {
   engaged: "Engaged",
   active: "Active",
   churned: "Churned",
+  prospect: "Prospect (not yet a member)",
 };
 
 PILLAR3.getScenario = function (key) {

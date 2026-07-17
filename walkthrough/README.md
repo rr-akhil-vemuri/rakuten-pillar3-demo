@@ -1,16 +1,15 @@
 # Pillar 3 Demo Walkthrough (PDF)
 
-`pillar-3-walkthrough.pdf` — a 20-page, screenshot-by-screenshot walkthrough of all three demo surfaces (Rakuten website, merchant Shopify site, mobile app), generated from the live prototypes in `/demos`. Intended as a leave-behind reference alongside the live click-through demo.
+## `exclusive_products_experience.pdf` (Impact.com-facing)
 
-`screenshots/` holds the individual PNGs used to build the PDF, numbered in walkthrough order.
+A 22-slide deck — deep-purple divider slides with a serif headline, and content slides pairing a left-rail explanation with a realistic phone/browser/email/dashboard mockup on the right. Organized scenario-by-scenario (Exclusive Drop, Early Access Window, Lapsed Re-engagement).
 
-## Regenerating
+Written to be shown externally to Impact.com: copy is scoped to the member/merchant flow only — no internal project codenames, no PRD/spec citations, no build-vs-buy framing, no fidelity flags. Source file: `deck-v2.html` (+ `deck-v2.css`).
 
-The capture + build scripts aren't checked into this repo (they live in a scratch npm project under a job tmp dir with `puppeteer` installed, pointed at system Chrome via `executablePath`, since this environment has no bundled headless Chromium download). To regenerate after changing the demos:
+Every screen in this deck is a **purpose-built mockup**, not a screenshot of the live click-through prototype in this repo.
 
-1. Set up a scratch Node project with `puppeteer` installed (`npm install puppeteer`).
-2. Point Puppeteer at system Chrome: `executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'`.
-3. Drive each demo surface through its walkthrough steps (click selectors, wait, screenshot) — see the step list embedded in this PDF's table of contents for the full sequence and which surface/scenario/variant each step captures.
-4. Render an HTML template (cover + TOC + one section per screenshot + back cover) to PDF via `page.pdf()`.
+### Regenerating
 
-Update `screenshots/` and re-run the PDF build whenever the demo UI changes meaningfully — the PDF is a snapshot, not auto-synced.
+1. Edit `deck-v2.html` (content/markup) and `deck-v2.css` (design system — colors, type, mockup-frame components) directly.
+2. Scratch Node project with `puppeteer-core` installed, pointed at system Chrome via `executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'` (no bundled Chromium download in this environment).
+3. Load the deck in Puppeteer at a 1280×720 viewport and call `page.pdf({ width: '1280px', height: '720px', printBackground: true })` directly — each `.slide` section is already sized to one full PDF page via CSS (`page-break-after: always`).

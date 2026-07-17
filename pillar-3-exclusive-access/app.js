@@ -1,30 +1,69 @@
 /*
  * Pillar 3 demo prototype — click-through only, no backend.
  * State machine: `state.screen` drives which render function runs.
- * Variant A/B toggle simulates the two undecided gating mechanisms from the spec.
+ * Real product: Gymshark's Shadow Seamless T Shirt — matches the sibling
+ * merchant-storefront surface (../pillar-3-merchant-shopify/), which gates
+ * the same real product behind the same real Gymshark screenshots. Once a
+ * member taps "Unlock This Item" here, the journey exits this surface via a
+ * real navigation (see attachHandlers()'s unlockBtn wiring) rather than a
+ * simulated in-app checkout — there is no gating-mechanism variant to choose
+ * on THIS surface anymore, since checkout now lives entirely on the merchant
+ * surface.
  */
 
 const PRODUCT = {
-  name: "Aurora Trail Jacket",
-  price: "$228.00",
-  discountPrice: "$182.40",
-  emoji: "🧥",
+  name: "Shadow Seamless T Shirt",
+  price: "$44.00",
+  image: "../../images/products/shadow-seamless-tshirt.jpg",
 };
 
 const state = {
-  screen: "home",
-  variant: "A", // "A" = draft-order/invoice link, "B" = shared link + single-use discount code
+  screen: "rewards",
   scenario: "exclusive-drop", // key into PILLAR3.SCENARIOS (shared/lifecycle-data.js) — see PRD v2 §7.2
   searchQuery: "",
-  redeemed: false,
 };
 
 const viewport = document.getElementById("screenViewport");
 const bottomNav = document.getElementById("bottomNav");
+const statusBar = document.getElementById("statusBar");
+
+// Screens that render a real screenshot with its own baked-in status bar +
+// bottom nav (as opposed to the hand-coded .statusbar/.bottom-nav used by
+// every other screen, which has no real screenshot to draw from).
+const SCREENSHOT_SCREENS = ["home", "explore", "rewards"];
+
+/* ---------- History (native browser Back/Forward) ----------
+ * Every state-changing click goes through commitState() instead of a bare
+ * `state.x = y; render();` — that pushes a snapshot of `state` onto the
+ * browser history stack, so native Back/Forward steps through the actual
+ * click sequence (any number of steps) rather than leaving the page
+ * entirely. boot() below seeds the initial entry via replaceState instead
+ * of pushState since it's applying URL params, not a user click.
+ */
+
+function pushHistory() {
+  history.pushState({ snapshot: { ...state } }, "", location.href);
+}
+
+function commitState(patch) {
+  Object.assign(state, patch);
+  pushHistory();
+  render();
+}
+
+window.addEventListener("popstate", (e) => {
+  if (e.state && e.state.snapshot) {
+    Object.assign(state, e.state.snapshot);
+    // renderScenarioToggle()'s active-class toggle lives outside viewport,
+    // so render() alone won't reflect a scenario change that Back/Forward
+    // just restored — refresh that chrome too.
+    renderScenarioToggle();
+    render();
+  }
+});
 
 function setScreen(screen) {
-  state.screen = screen;
-  render();
+  commitState({ screen });
 }
 
 function render() {
@@ -35,140 +74,156 @@ function render() {
     instore: renderPlaceholder,
     account: renderPlaceholder,
     offerDetail: renderOfferDetail,
-    redirect: renderRedirect,
-    checkout: renderCheckout,
-    confirmation: renderConfirmation,
     searchEmpty: renderSearchEmpty,
   };
 
   viewport.innerHTML = renderers[state.screen]();
-  updateBottomNav();
+  updateChrome();
   attachHandlers();
   viewport.scrollTop = 0;
 }
 
-function updateBottomNav() {
-  const tabScreens = ["home", "explore", "rewards", "instore", "account"];
-  const activeTab = tabScreens.includes(state.screen) ? state.screen : null;
-  bottomNav.querySelectorAll(".nav-item").forEach((btn) => {
-    btn.classList.toggle("active", btn.dataset.screen === activeTab);
-  });
+function updateChrome() {
+  const isScreenshot = SCREENSHOT_SCREENS.includes(state.screen);
+  statusBar.style.display = isScreenshot ? "none" : "";
+  bottomNav.style.display = isScreenshot ? "none" : "";
+  if (!isScreenshot) {
+    const tabScreens = ["home", "explore", "rewards", "instore", "account"];
+    const activeTab = tabScreens.includes(state.screen) ? state.screen : null;
+    bottomNav.querySelectorAll(".nav-item").forEach((btn) => {
+      btn.classList.toggle("active", btn.dataset.screen === activeTab);
+    });
+  }
 }
 
-/* ---------- Screen 1: Home — hero card entry point (US-1) ---------- */
+/* ---------- Screen 1: Home — real Rakuten app screenshot ----------
+ * Out of scope per direction from the person running this project ("we dont
+ * care for the home page"): shown full-bleed for realism/context only. The
+ * screenshot's own baked-in status bar + bottom nav replace the hand-coded
+ * .statusbar/.bottom-nav (hidden for this screen — see updateChromeVisibility).
+ * Only interactive surface here is the 5 nav hotspots overlaid on the real
+ * nav bar pixels. */
 
 function renderHome() {
-  const s = PILLAR3.getScenario(state.scenario);
   return `
-    <div class="screen">
-      <div class="search-bar">🔍 Try searching Expedia</div>
-      <div class="tabs-row">
-        <span class="tab-pill active">Today</span>
-        <span class="tab-pill">For you</span>
-      </div>
-
-      <div class="hero-card exclusive-card" id="exclusiveHero">
-        <div class="eyebrow">
-          <span class="lock-badge">🔒 ${s.badgeText}</span>
-        </div>
-        <h3>${s.heroHeadline}</h3>
-        <p>${s.hook}</p>
-        <div class="lifecycle-chip">Arc lifecycle stage (internal): ${PILLAR3.LIFECYCLE_LABELS[s.lifecycleStage]}</div>
-        <button class="pill-btn">View Access</button>
-      </div>
-
-      <div class="hero-card">
-        <div class="eyebrow">StubHub</div>
-        <h3>Shop today's Big Deal</h3>
-        <p>12% Cash Back <s>was 2%</s></p>
-        <button class="pill-btn">Shop Now</button>
-      </div>
-
-      <div class="section-title">Shop with your welcome reward</div>
-      <div class="store-grid">
-        ${storeTile("Amazon", "#111", "$5 Cash Back", "was $0")}
-        ${storeTile("eBay", "#E1291F", "Up to 11%", "was 1%")}
-        ${storeTile("Best Buy", "#0A4FA8", "Up to 17.5%", "was 7.5%")}
+    <div class="screen shot-screen">
+      <div class="shot-wrap">
+        <img src="../../design/assets/rakuten-app-home.png" alt="Rakuten app — Home tab" class="shot-img" />
+        ${navHotspots(NAV_TOP_PCT_STANDARD, NAV_HEIGHT_PCT_STANDARD)}
       </div>
     </div>
   `;
 }
 
-function storeTile(name, color, rate, was) {
-  return `
-    <div>
-      <div class="store-tile" style="background:${color}">${name}</div>
-      <div class="store-label">${name}</div>
-      <div class="store-rate">${rate}</div>
-      <div class="store-rate-was">${was}</div>
-    </div>
-  `;
-}
-
-/* ---------- Explore tab — secondary entry point + negative case search ---------- */
+/* ---------- Explore tab — real Rakuten app screenshot (same treatment as Home) ---------- */
 
 function renderExplore() {
   return `
-    <div class="screen">
-      <div class="search-bar">
-        <input class="search-input" id="exploreSearch" placeholder="Try searching Ulta Beauty or ${PRODUCT.name}" />
-      </div>
-      <div class="category-grid">
-        ${categoryTile("🔥", "Hot Deals")}
-        ${categoryTile("％", "Extra")}
-        ${categoryTile("📈", "Trending")}
-        ${categoryTile("✈️", "Travel")}
-        ${categoryTile("📷", "Experiences")}
-        ${categoryTile("👕", "Clothing")}
-        ${categoryTile("💅", "Beauty")}
-        ${categoryTile("🎧", "Electronics")}
-        <button class="category-tile" id="exclusiveTile">
-          <span class="category-icon exclusive">🔒</span>
-          <span>Exclusive</span>
-        </button>
+    <div class="screen shot-screen">
+      <div class="shot-wrap">
+        <img src="../../design/assets/rakuten-app-explore.png" alt="Rakuten app — Explore tab" class="shot-img" />
+        ${navHotspots(NAV_TOP_PCT_STANDARD, NAV_HEIGHT_PCT_STANDARD)}
       </div>
     </div>
   `;
 }
 
-function categoryTile(icon, label) {
-  return `
-    <div class="category-tile">
-      <span class="category-icon">${icon}</span>
-      <span>${label}</span>
-    </div>
-  `;
-}
+/* ---------- Rewards tab — real Rakuten app screenshot, composited ----------
+ * The image itself (rakuten-app-rewards-composited.png) is the real Rewards
+ * screenshot with ONE new card composited in via Pillow (see design/assets/
+ * — built from rakuten-app-rewards.png), positioned between the
+ * Active/Earned/Expired pills and the Amazon Offer card. Only the card's
+ * background/badge-shape/border are baked into the image pixels — its
+ * title+description text was deliberately left blank (cleared out of a
+ * once-static composite) so the actual copy can be rendered as real HTML
+ * text on top, driven by REWARDS_CARD_COPY[state.scenario] below. That's
+ * what lets this card's copy change per scenario, matching the same
+ * PILLAR3.getScenario(state.scenario)-driven pattern renderOfferDetail()
+ * already uses — a static baked-in-pixels card couldn't vary at all.
+ *
+ * This is the quid-pro-quo tile: Rakuten surfaces Gymshark's exclusive
+ * product on the high-traffic Rewards tab (value to the merchant: an
+ * acquisition/visibility channel) in exchange for exclusive member pricing
+ * (value to the member, and to Rakuten as the platform that unlocked it).
+ * Tapping its hotspot reuses the SAME transition the Home hero card's old
+ * "View Access" button used to trigger (setScreen("offerDetail")) — wired
+ * in attachHandlers(), not duplicated here. */
 
-/* ---------- Rewards tab (unchanged reference screen) ---------- */
+// Per-scenario Rewards-card copy. Mirrors the tone of each scenario's
+// PILLAR3.SCENARIOS badgeText/hook (shared/lifecycle-data.js) without
+// literally reusing those strings — the shared file's hook text names the
+// merchant via PILLAR3.MERCHANT_NAME, which is a shared constant this
+// surface doesn't own (see the sibling merchant-storefront surface, which
+// may be mid-rebrand) — so this card's own real-brand-name copy is defined
+// locally here instead.
+const REWARDS_CARD_COPY = {
+  "exclusive-drop": {
+    title: "Gymshark — Member Exclusive",
+    desc: "You're eligible for an exclusive item from this partner this month — unlock it below.",
+  },
+  "early-access-window": {
+    title: "Gymshark — Early Access",
+    desc: "You've unlocked early access to this item as a Rakuten member — shop before anyone else.",
+  },
+  "lapsed-reengagement": {
+    title: "Gymshark — We've Held Your Spot",
+    desc: "Exclusive access to this item expires in 24 hours — unlock it below.",
+  },
+  "prospect-unlock": {
+    title: "Gymshark — Unlock Member Pricing",
+    desc: "Join Rakuten free to unlock your exclusive price on this item.",
+  },
+};
 
 function renderRewards() {
+  const copy = REWARDS_CARD_COPY[state.scenario] || REWARDS_CARD_COPY["exclusive-drop"];
   return `
-    <div class="screen">
-      <div class="section-title" style="margin-top:4px;">Rewards</div>
-      <div class="tabs-row">
-        <span class="tab-pill active">Active</span>
-        <span class="tab-pill">Earned</span>
-        <span class="tab-pill">Expired</span>
+    <div class="screen shot-screen">
+      <div class="shot-wrap">
+        <img src="../../design/assets/rakuten-app-rewards-composited.png" alt="Rakuten app — Rewards tab, with Gymshark member-exclusive card" class="shot-img" />
+        <div class="rewards-card-overlay">
+          <p class="rc-title">${copy.title}</p>
+          <p class="rc-desc">${copy.desc}</p>
+        </div>
+        <button class="hotspot merchant-hotspot" id="merchantRewardTile"
+          style="left:4.897%; top:30.423%; width:90.098%; height:10.607%;"
+          aria-label="${copy.title}"></button>
+        ${navHotspots(NAV_TOP_PCT_REWARDS, NAV_HEIGHT_PCT_REWARDS)}
       </div>
-      ${rewardItem("🛍️", "$5", "Amazon Offer", "Shop with the app or extension up to 3 times to earn a total of $15.")}
-      ${rewardItem("⚡", "+10%", "Welcome Boost", "Get an extra 10% Cash Back at 2,500+ stores, up to $50.")}
-      ${rewardItem("🔒", "", "Members-Only Access", "You're eligible for one exclusive product this month — check the Home tab.")}
     </div>
   `;
 }
 
-function rewardItem(icon, amount, title, desc) {
-  return `
-    <div class="reward-item">
-      <div class="reward-icon">${icon}</div>
-      <div>
-        ${amount ? `<div class="reward-amount">${amount}</div>` : ""}
-        <div class="reward-title">${title}</div>
-        <div class="reward-desc">${desc}</div>
-      </div>
-    </div>
-  `;
+/* ---------- Shared: invisible nav hotspots overlaid on each screenshot's own
+ * baked-in bottom nav bar. Percentage-based so they scale with the image at
+ * any display width. x-bounds are identical across all three screenshots
+ * (same 919px-wide source, same nav layout); y-bounds differ because the
+ * composited Rewards image is taller than Home/Explore (extra card height),
+ * which shifts its nav bar down — hence two top/height constants below. ---------- */
+
+const NAV_TOP_PCT_STANDARD = 89.890;   // Home/Explore: nav top=1796px of 1998px native height
+const NAV_HEIGHT_PCT_STANDARD = 10.110; // 202px of 1998px
+
+const NAV_TOP_PCT_REWARDS = 91.183;    // Rewards (composited): nav top=2089px of 2291px native height
+const NAV_HEIGHT_PCT_REWARDS = 8.817;  // 202px of 2291px
+
+function navHotspots(topPct, heightPct) {
+  const items = [
+    { screen: "home", left: 0, width: 20.022 },
+    { screen: "explore", left: 20.022, width: 20.022 },
+    { screen: "rewards", left: 40.044, width: 20.022 },
+    { screen: "instore", left: 60.065, width: 20.022 },
+    { screen: "account", left: 80.087, width: 19.913 },
+  ];
+  return items
+    .map(
+      (it) => `
+    <button class="hotspot nav-hotspot" data-screen="${it.screen}"
+      style="left:${it.left}%; top:${topPct}%; width:${it.width}%; height:${heightPct}%;"
+      aria-label="${it.screen}"></button>
+  `
+    )
+    .join("");
 }
 
 function renderPlaceholder() {
@@ -183,19 +238,25 @@ function renderPlaceholder() {
   `;
 }
 
-/* ---------- Screen 2: Offer detail (US-1) ---------- */
+/* ---------- Screen 2: Offer detail (US-1) ----------
+ * Real product (Gymshark's Shadow Seamless T Shirt, $44.00) — see PRODUCT at
+ * top of file. Per-scenario badge/countdown/cashback copy still comes from
+ * PILLAR3.getScenario(state.scenario) exactly as before; only the product
+ * being shown changed, not the scenario-data wiring. "Unlock This Item" now
+ * performs a real cross-surface navigation instead of entering a simulated
+ * in-app checkout — see attachHandlers()'s unlockBtn wiring. */
 
 function renderOfferDetail() {
   const s = PILLAR3.getScenario(state.scenario);
   return `
     <div class="screen">
       <div class="back-row" id="backToHome">← Back</div>
-      <div class="product-image">${PRODUCT.emoji}</div>
-      <div class="exclusive-tag">🔒 ${s.badgeText}</div>
+      <div class="product-image"><img src="${PRODUCT.image}" alt="${PRODUCT.name}" class="product-photo" /></div>
+      <div class="exclusive-tag">${s.badgeText}</div>
       <div class="product-title">${PRODUCT.name}</div>
       <div class="product-price">${PRODUCT.price}</div>
       <div class="countdown-row">
-        <div class="countdown-box">
+        <div class="countdown-box${state.scenario === "lapsed-reengagement" ? " urgent" : ""}">
           <div class="countdown-label">${s.countdownLabel}</div>
           <div class="countdown-value">${s.countdownValue}</div>
         </div>
@@ -204,157 +265,8 @@ function renderOfferDetail() {
           <div class="countdown-value">${s.cashbackRate}</div>
         </div>
       </div>
-      <div class="eligibility-note">
-        <span class="demo-flag">Demo simplification</span>
-        Available to select members. This eligibility check is a hardcoded synthetic allowlist for the demo — the underlying spec defines no real tiering logic beyond "targeted set of members."
-      </div>
       <button class="full-btn dark" id="unlockBtn">Unlock This Item</button>
       <div class="secondary-link" id="backToHome2">Not now</div>
-    </div>
-  `;
-}
-
-/* ---------- Screen 3: Click/redirect transition (US-2) ---------- */
-
-function renderRedirect() {
-  setTimeout(() => setScreen("checkout"), 1400);
-  return `
-    <div class="screen redirect-wrap">
-      <div class="spinner"></div>
-      <h3>Redirecting you to your exclusive access checkout...</h3>
-      <p>Tracking your access via Rakuten — do not close this window.</p>
-      <div class="redirect-trace">
-        <div class="ok">✓ Member authenticated (member_id: rkt_test_00219)</div>
-        <div class="ok">✓ Click logged against member identity</div>
-        <div>… resolving gated destination on merchant store <span style="color:#A6862F">[step depends on Impact.com confirmation]</span></div>
-      </div>
-    </div>
-  `;
-}
-
-/* ---------- Screen 4: Gated checkout (US-4) — two variants ---------- */
-
-function renderCheckout() {
-  if (state.variant === "A") {
-    // Variant A = Shopify draft-order invoice link. The member has functionally
-    // left the Rakuten app for a hosted page on the merchant's own Shopify
-    // checkout domain, so this renders as an "in-app browser" viewing a
-    // Shopify-style checkout — not a Rakuten-branded screen. See
-    // impact-pillar3-spec.md §1.4.
-    return `
-      <div class="screen shopify-screen">
-        <div class="inapp-browserbar">
-          <span class="inapp-lock" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
-          </span>
-          <span class="inapp-url">northfield-outfitters.myshopify.com/…/invoices/…</span>
-          <span class="inapp-close" id="backToOffer" title="Close">✕</span>
-        </div>
-
-        <div class="shopify-page">
-          <div class="shopify-merchant-header">${PILLAR3.MERCHANT_NAME}</div>
-
-          <div class="shopify-order-summary">
-            <div class="shopify-summary-item">
-              <span class="shopify-thumb">${PRODUCT.emoji}</span>
-              <span class="shopify-summary-name">${PRODUCT.name}</span>
-              <span class="shopify-summary-price">${PRODUCT.price}</span>
-            </div>
-            <div class="shopify-summary-line"><span>Shipping</span><span>Free</span></div>
-            <div class="shopify-summary-line total"><span>Total</span><span>${PRODUCT.price}</span></div>
-          </div>
-
-          <div class="shopify-section">
-            <div class="shopify-section-label">Contact</div>
-            <div class="shopify-field muted">member@example.com</div>
-          </div>
-
-          <div class="shopify-section">
-            <div class="shopify-section-label">Shipping address</div>
-            <div class="shopify-field muted shopify-address">
-              <span>Alex Rivera</span>
-              <span>482 Birchwood Lane, Boulder, CO 80301</span>
-            </div>
-          </div>
-
-          <div class="shopify-section">
-            <div class="shopify-section-label">Shipping method</div>
-            <div class="shopify-shipping-method"><span>Standard</span><span>Free</span></div>
-          </div>
-
-          <div class="shopify-section">
-            <div class="shopify-section-label">Payment</div>
-            <div class="shopify-card-icons" aria-hidden="true">
-              <span class="card-chip">VISA</span>
-              <span class="card-chip">MC</span>
-              <span class="card-chip">AMEX</span>
-            </div>
-            <button class="shopify-pay-btn" id="payBtn" ${state.redeemed ? "disabled" : ""}>
-              ${state.redeemed ? "Link already redeemed" : "Pay now"}
-            </button>
-          </div>
-
-          <div class="shopify-footer">
-            <span class="shopify-secure">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
-              Secure Checkout
-            </span>
-            <span class="shopify-powered">Powered by Shopify</span>
-          </div>
-        </div>
-      </div>
-    `;
-  }
-
-  return `
-    <div class="screen">
-      <div class="back-row" id="backToOffer">← Back</div>
-      <div class="section-title" style="margin-top:4px;">Checkout</div>
-      <div class="checkout-card">
-        <div class="checkout-row"><span>${PRODUCT.emoji} ${PRODUCT.name}</span><span>${PRODUCT.price}</span></div>
-        <div class="checkout-row"><span>Shipping</span><span>$0.00</span></div>
-      </div>
-      <div class="discount-applied">
-        <span>🔒 EXCLUSIVE-ACCESS code applied</span>
-        <span>${state.redeemed ? "Used" : "-20%"}</span>
-      </div>
-      <div class="checkout-card">
-        <div class="checkout-row total"><span>Total</span><span>${state.redeemed ? "—" : PRODUCT.discountPrice}</span></div>
-      </div>
-      <button class="full-btn" id="payBtn" ${state.redeemed ? "disabled" : ""}>
-        ${state.redeemed ? "Code already used" : "Complete purchase"}
-      </button>
-    </div>
-  `;
-}
-
-/* ---------- Screen 5: Confirmation + attribution proof (US-5) ---------- */
-
-function renderConfirmation() {
-  const orderId = "SHF-88213";
-  const clickId = "rkt_click_5591a";
-
-  return `
-    <div class="screen">
-      <div class="confirm-check">✓</div>
-      <div class="confirm-title">Order Confirmed</div>
-      <div class="confirm-sub">Your exclusive item is on its way.</div>
-
-      <div class="checkout-card">
-        <div class="checkout-row"><span>${PRODUCT.emoji} ${PRODUCT.name}</span><span>${state.variant === "B" ? PRODUCT.discountPrice : PRODUCT.price}</span></div>
-        <div class="checkout-row"><span>Order ID</span><span>${orderId}</span></div>
-      </div>
-
-      <div class="attribution-panel">
-        <h4>📊 Attribution proof (demo view)</h4>
-        <div class="attribution-row"><span>Order ID</span><span>${orderId}</span></div>
-        <div class="attribution-row"><span>Originating click</span><span>${clickId}</span></div>
-        <div class="attribution-row"><span>Member ID</span><span>rkt_test_00219</span></div>
-        <div class="matched-badge">Matched ✓ — Attributed to Rakuten</div>
-      </div>
-      <div class="demo-note-banner">This panel is a demo-only visualization so attribution can be seen live, not just claimed.</div>
-
-      <button class="full-btn" id="doneBtn" style="margin-top:16px;">Back to Home</button>
     </div>
   `;
 }
@@ -386,44 +298,43 @@ function attachHandlers() {
     if (el) el.addEventListener(evt, fn);
   };
 
-  // Home
-  on("exclusiveHero", "click", () => setScreen("offerDetail"));
+  // Rewards screenshot — merchant quid-pro-quo hotspot reuses the exact same
+  // transition the old Home hero card's "View Access" button used to trigger.
+  on("merchantRewardTile", "click", () => setScreen("offerDetail"));
 
-  // Explore
-  on("exclusiveTile", "click", () => setScreen("offerDetail"));
-  on("exploreSearch", "keydown", (e) => {
-    if (e.key === "Enter") {
-      state.searchQuery = e.target.value || PRODUCT.name;
-      setScreen("searchEmpty");
-    }
+  // Nav hotspots overlaid on the real screenshots' baked-in bottom nav
+  // (Home/Explore/Rewards screens only — see navHotspots()).
+  viewport.querySelectorAll(".nav-hotspot").forEach((btn) => {
+    btn.addEventListener("click", () => setScreen(btn.dataset.screen));
   });
+
   on("exploreSearch2", "keydown", (e) => {
     if (e.key === "Enter") {
-      state.searchQuery = e.target.value;
-      render();
+      commitState({ searchQuery: e.target.value });
     }
   });
   on("backToExplore", "click", () => setScreen("explore"));
 
   // Offer detail
-  on("backToHome", "click", () => setScreen("home"));
-  on("backToHome2", "click", () => setScreen("home"));
-  on("unlockBtn", "click", () => setScreen("redirect"));
+  on("backToHome", "click", () => setScreen("rewards"));
+  on("backToHome2", "click", () => setScreen("rewards"));
 
-  // Checkout
-  on("backToOffer", "click", () => setScreen("offerDetail"));
-  on("payBtn", "click", () => {
-    state.redeemed = true;
-    setScreen("confirmation");
+  // "Unlock This Item" — real cross-surface navigation to the merchant demo
+  // surface's gated-product view, exactly like a real Rakuten-issued link
+  // would work. No fake "redirecting…" interstitial, no simulated in-app
+  // checkout on this surface anymore — the merchant surface's own boot()
+  // (../pillar-3-merchant-shopify/app.js) reads ?src=website to jump
+  // straight into renderGatedProduct(), and ?scenario= to carry the current
+  // scenario across surfaces, matching the param names that surface's boot()
+  // already checks for.
+  on("unlockBtn", "click", () => {
+    window.location.href =
+      "../pillar-3-merchant-shopify/index.html?src=website&scenario=" + encodeURIComponent(state.scenario);
   });
 
-  // Confirmation
-  on("doneBtn", "click", () => {
-    state.redeemed = false;
-    setScreen("home");
-  });
-
-  // Bottom nav
+  // Hand-coded bottom nav (.bottom-nav) — only visible/relevant for screens
+  // with no real screenshot (offerDetail, searchEmpty, instore/account
+  // placeholder). See updateChrome().
   bottomNav.querySelectorAll(".nav-item").forEach((btn) => {
     btn.onclick = () => setScreen(btn.dataset.screen);
   });
@@ -446,30 +357,34 @@ function renderScenarioToggle() {
 }
 
 function setScenario(key) {
-  state.scenario = key;
+  commitState({ scenario: key });
   renderScenarioToggle();
-  if (state.screen === "home" || state.screen === "offerDetail" || state.screen === "searchEmpty") {
-    render();
-  }
 }
 
-/* ---------- Variant toggle + reset (outside phone rig) ---------- */
+/* ---------- Reset (outside phone rig) ---------- */
 
-document.getElementById("variantABtn").addEventListener("click", () => setVariant("A"));
-document.getElementById("variantBBtn").addEventListener("click", () => setVariant("B"));
 document.getElementById("resetBtn").addEventListener("click", () => {
-  state.screen = "home";
-  state.searchQuery = "";
-  state.redeemed = false;
-  render();
+  commitState({ screen: "rewards", searchQuery: "" });
 });
 
-function setVariant(v) {
-  state.variant = v;
-  document.getElementById("variantABtn").classList.toggle("active", v === "A");
-  document.getElementById("variantBBtn").classList.toggle("active", v === "B");
-  if (state.screen === "checkout") render();
-}
+/* ---------- Boot: honor ?clean=1 for screenshot-accurate captures, and
+ * ?scenario= so a link can land directly on a given scenario ----------
+ * The merchant surface's "Return to Rakuten" button (../pillar-3-merchant-shopify/app.js)
+ * already sends the member back here with ?scenario=<key> attached so the
+ * lifecycle scenario carries across surfaces in both directions — this reads
+ * it back in. Also handy for direct-linking a screenshot check to one
+ * scenario without clicking through the toggle by hand. */
 
-renderScenarioToggle();
-render();
+(function boot() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("clean") === "1") {
+    document.body.classList.add("clean-shot");
+  }
+  const scenarioParam = params.get("scenario");
+  if (scenarioParam && PILLAR3.SCENARIOS.some((s) => s.key === scenarioParam)) {
+    state.scenario = scenarioParam;
+  }
+  history.replaceState({ snapshot: { ...state } }, "", location.href);
+  renderScenarioToggle();
+  render();
+})();
